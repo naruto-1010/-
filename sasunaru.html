@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111b3d" />
+  <title>🍅🍥佐鳴記帳所 V15｜首頁</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #0f172a; }
+    input, select, button { -webkit-tap-highlight-color: transparent; }
+    .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+    details > summary { -webkit-tap-highlight-color: transparent; }
+    button { touch-action: manipulation; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+  </style>
+  <style id="sasunarulog-global-theme">
+/* SASUNARU GLOBAL THEME — Sasuke indigo/blue × Naruto orange */
+:root {
+  color-scheme: dark;
+  --sn-blue: #83cfff;
+  --sn-blue-strong: #3b82f6;
+  --sn-indigo: #312e81;
+  --sn-purple: #7c3aed;
+  --sn-orange: #fb923c;
+  --sn-gold: #fbbf24;
+  --sn-panel: rgba(20, 32, 66, .92);
+  --sn-panel-soft: rgba(30, 41, 83, .82);
+  --sn-border: rgba(125, 184, 255, .35);
+}
+html { background: #080f25 !important; }
+body {
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(37, 99, 235, .34), transparent 38%),
+    radial-gradient(ellipse at 100% 12%, rgba(249, 115, 22, .20), transparent 32%),
+    radial-gradient(ellipse at 75% 100%, rgba(124, 58, 237, .18), transparent 38%),
+    linear-gradient(145deg, #080f25 0%, #111b3d 48%, #1b1634 100%) fixed !important;
+  background-color: #080f25 !important;
+  color: #edf4ff !important;
+}
+#root { position: relative; isolation: isolate; }
+#root::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle at 12% 30%, rgba(96, 165, 250, .07), transparent 25%),
+              radial-gradient(circle at 88% 58%, rgba(251, 146, 60, .06), transparent 24%);
+}
+/* Global surfaces: all tabs, cards, forms and history panels */
+.bg-slate-950 { background-color: rgba(8, 15, 37, .94) !important; }
+.bg-slate-900 { background-color: rgba(15, 25, 57, .96) !important; }
+.bg-slate-800 { background-color: rgba(25, 38, 77, .91) !important; }
+.bg-slate-700 { background-color: rgba(48, 60, 105, .94) !important; }
+.border-slate-700, .border-slate-600 { border-color: rgba(126, 173, 255, .27) !important; }
+.bg-blue-950\/50 { background-color: rgba(25, 49, 102, .68) !important; }
+.bg-sky-950\/50 { background-color: rgba(17, 57, 105, .70) !important; }
+.bg-gradient-to-br.from-slate-950,
+.bg-gradient-to-br.from-slate-900,
+.bg-gradient-to-br.from-slate-950.via-blue-950,
+.bg-gradient-to-br.from-slate-900.via-slate-800 {
+  background-image: linear-gradient(135deg, rgba(30, 64, 135, .95), rgba(36, 35, 91, .96) 56%, rgba(105, 54, 35, .78)) !important;
+}
+/* Main app masthead becomes the whole site's visual anchor */
+header.text-center {
+  background: linear-gradient(120deg, rgba(25, 48, 104, .98) 0%, rgba(49, 46, 129, .95) 54%, rgba(154, 75, 30, .91) 100%) !important;
+  border-color: rgba(251, 191, 36, .48) !important;
+  box-shadow: 0 14px 38px rgba(3, 8, 25, .34), inset 0 1px rgba(255,255,255,.08) !important;
+}
+header h1 { color: #ffd19c !important; text-shadow: 0 0 22px rgba(251,146,60,.2); }
+header .text-slate-400 { color: #d0defa !important; }
+nav.grid {
+  background: linear-gradient(100deg, rgba(18, 35, 79, .98), rgba(47, 32, 76, .97)) !important;
+  border-color: rgba(129, 190, 255, .35) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.18);
+}
+/* Sasuke blue and Naruto orange are both visible across every page */
+.bg-amber-400 { background-color: #fb923c !important; }
+.hover\:bg-amber-300:hover { background-color: #fdba74 !important; }
+.text-amber-300, .text-amber-200 { color: #ffd08a !important; }
+.border-amber-500\/30, .border-amber-500\/20 { border-color: rgba(251, 146, 60, .48) !important; }
+.bg-sky-400 { background-color: #75c9ff !important; }
+.hover\:bg-sky-300:hover { background-color: #a5e0ff !important; }
+.text-sky-200, .text-sky-100 { color: #bfe8ff !important; }
+.border-sky-400\/30, .border-sky-400\/20 { border-color: rgba(96, 165, 250, .45) !important; }
+button {
+  transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+}
+button:hover { filter: brightness(1.08); }
+button:active { transform: translateY(1px); }
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid #fdba74 !important; outline-offset: 2px;
+}
+input, select, textarea {
+  background-color: rgba(7, 15, 37, .92) !important;
+  color: #f2f7ff !important;
+  border-color: rgba(125, 184, 255, .34) !important;
+}
+input::placeholder { color: #91a5cd !important; }
+option { background: #111b3d; color: #f2f7ff; }
+/* Card outlines and visual separation */
+.rounded-xl.border, .rounded-2xl.border { box-shadow: 0 7px 22px rgba(2, 7, 22, .14); }
+.text-slate-400 { color: #b9c9e8 !important; }
+.text-slate-500 { color: #9aaed4 !important; }
+.text-slate-300 { color: #d3def5 !important; }
+.text-slate-200 { color: #e4edff !important; }
+footer { color: #9eb2d9 !important; }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }
+
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+    const STORAGE_KEY = "sasunarulog_records_v4";
+    const SETTINGS_KEY = "sasunarulog_settings_v1";
+    const SAVINGS_GOALS_KEY = "sasunarulog_savings_goals_v1";
+    const SAVINGS_TX_KEY = "sasunarulog_savings_transactions_v1";
+    const MONTHLY_CLOSINGS_KEY = "sasunarulog_monthly_closings_v1";
+    const money = n => new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(Number(n || 0));
+    // 所有系統日期統一使用台灣時區，避免裝置時區或 UTC 跨日造成日期落差。
+    const todayLocal = () => {
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(new Date());
+      const part = type => parts.find(p => p.type === type)?.value || "00";
+      return `${part("year")}-${part("month")}-${part("day")}`;
+    };
+    const todayDisplay = value => {
+      const d = new Date(`${value}T12:00:00+08:00`);
+      const weekdays = ["日","一","二","三","四","五","六"];
+      return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（星期${weekdays[d.getDay()]}）`;
+    };
+    const safeRead = (key, fallback) => {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch (e) { return fallback; }
+    };
+    const dateLabel = value => {
+      if (!value) return "";
+      const d = new Date(value + (value.length === 10 ? "T12:00:00" : ""));
+      if (Number.isNaN(d.getTime())) return value;
+      const weekdays = ["日","一","二","三","四","五","六"];
+      return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}(${weekdays[d.getDay()]})`;
+    };
+    const startOfWeek = date => {
+      const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      d.setDate(d.getDate() - d.getDay()); // Sunday as first day
+      d.setHours(0,0,0,0);
+      return d;
+    };
+
+    function App() {
+      const [records, setRecords] = useState(() => safeRead(STORAGE_KEY, []));
+      const [savingsGoals, setSavingsGoals] = useState(() => {
+        const goals = safeRead(SAVINGS_GOALS_KEY, []);
+        const piggy = goals.find(g => g.monthlyClosePiggyBank || g.name === "存錢筒");
+        if (piggy) { piggy.monthlyClosePiggyBank = true; return goals; }
+        return [{ id: "sasunaru-monthly-piggy-bank", group: "其他", name: "存錢筒", target: 0, monthly: 0, monthlyClosePiggyBank: true, createdAt: new Date().toISOString() }, ...goals];
+      });
+      const [savingsTransactions, setSavingsTransactions] = useState(() => safeRead(SAVINGS_TX_KEY, []));
+      const [monthlyClosings, setMonthlyClosings] = useState(() => safeRead(MONTHLY_CLOSINGS_KEY, []));
+      const [closingMonth, setClosingMonth] = useState(() => todayLocal().slice(0,7));
+      const [activeTab, setActiveTab] = useState("home");
+      const [goalGroup, setGoalGroup] = useState("佐鳴周邊類");
+      const [goalName, setGoalName] = useState("");
+      const [goalTarget, setGoalTarget] = useState("");
+      const [goalMonthly, setGoalMonthly] = useState("");
+      const [editingGoalId, setEditingGoalId] = useState(null);
+      const [editingGoalGroup, setEditingGoalGroup] = useState("佐鳴周邊類");
+      const [editingGoalName, setEditingGoalName] = useState("");
+      const [editingGoalTarget, setEditingGoalTarget] = useState("");
+      const [editingGoalMonthly, setEditingGoalMonthly] = useState("");
+      const [selectedGoalId, setSelectedGoalId] = useState("");
+      const [savingAmount, setSavingAmount] = useState("");
+      const [savingNote, setSavingNote] = useState("");
+      const [savingAction, setSavingAction] = useState("deposit");
+      const [savingSource, setSavingSource] = useState("balance");
+      const [settings, setSettings] = useState(() => safeRead(SETTINGS_KEY, { dailyBudget: 500, monthlyBudget: 10000 }));
+      const [type, setType] = useState("expense");
+      const [amount, setAmount] = useState("");
+      const [category, setCategory] = useState("日常用品－生活雜支");
+      const [note, setNote] = useState("");
+      const [currentDate, setCurrentDate] = useState(todayLocal());
+      const [recordDate, setRecordDate] = useState(todayLocal());
+      const [recordDateManual, setRecordDateManual] = useState(false);
+      const [payment, setPayment] = useState("現金");
+      const [range, setRange] = useState("day");
+      const [weekdayMetric, setWeekdayMetric] = useState("total");
+      const [electricMeterReading, setElectricMeterReading] = useState("");
+      const [customDate, setCustomDate] = useState(todayLocal());
+      const [customDateManual, setCustomDateManual] = useState(false);
+      const [historyGroup, setHistoryGroup] = useState("month");
+      const [ledgerYear, setLedgerYear] = useState(todayLocal().slice(0,4));
+      const [dialog, setDialog] = useState("佐助：「吊車尾的，今天也把帳記好。有煩惱就說，除了算帳，我也會聽。」");
+      const [editingId, setEditingId] = useState(null);
+      const [budgetOpen, setBudgetOpen] = useState(false);
+      const [dailyBudgetInput, setDailyBudgetInput] = useState(String(settings.dailyBudget ?? 500));
+      const [monthlyBudgetInput, setMonthlyBudgetInput] = useState(String(settings.monthlyBudget ?? 10000));
+      const [chatInput, setChatInput] = useState("");
+      const [showCloudInfo, setShowCloudInfo] = useState(false);
+      const [showImport, setShowImport] = useState(false);
+      const [notice, setNotice] = useState("");
+
+      useEffect(() => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); }
+        catch (e) { setNotice("本機儲存失敗，請先匯出備份，避免資料遺失。"); }
+      }, [records]);
+      useEffect(() => {
+        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch(e) {}
+      }, [settings]);
+      useEffect(() => { try { localStorage.setItem(SAVINGS_GOALS_KEY, JSON.stringify(savingsGoals)); } catch(e) { setNotice("存錢目標儲存失敗，請先備份。"); } }, [savingsGoals]);
+      useEffect(() => { try { localStorage.setItem(SAVINGS_TX_KEY, JSON.stringify(savingsTransactions)); } catch(e) { setNotice("存錢紀錄儲存失敗，請先備份。"); } }, [savingsTransactions]);
+      useEffect(() => { try { localStorage.setItem(MONTHLY_CLOSINGS_KEY, JSON.stringify(monthlyClosings)); } catch(e) { setNotice("月結紀錄儲存失敗，請先備份。"); } }, [monthlyClosings]);
+      // 每 30 秒檢查台灣日期；跨日後更新系統日期與未手動指定的日期欄位。
+      useEffect(() => {
+        const refreshTaiwanDate = () => {
+          const nowDate = todayLocal();
+          setCurrentDate(nowDate);
+          if (!recordDateManual) setRecordDate(nowDate);
+          if (!customDateManual) setCustomDate(nowDate);
+        };
+        refreshTaiwanDate();
+        const timer = setInterval(refreshTaiwanDate, 30000);
+        return () => clearInterval(timer);
+      }, [recordDateManual, customDateManual]);
+
+      const selectedRange = useMemo(() => {
+        const chosen = new Date(customDate + "T12:00:00");
+        const start = new Date(chosen.getFullYear(), chosen.getMonth(), chosen.getDate());
+        const end = new Date(start);
+        if (range === "day") end.setDate(end.getDate()+1);
+        if (range === "week") {
+          const s = startOfWeek(chosen);
+          const e = new Date(s); e.setDate(e.getDate()+7);
+          return { start:s, end:e, label:"本週" };
+        }
+        if (range === "month") {
+          return { start:new Date(chosen.getFullYear(),chosen.getMonth(),1), end:new Date(chosen.getFullYear(),chosen.getMonth()+1,1), label:"本月" };
+        }
+        if (range === "year") {
+          return { start:new Date(chosen.getFullYear(),0,1), end:new Date(chosen.getFullYear()+1,0,1), label:"本年" };
+        }
+        if (range === "all") return { start:new Date(0), end:new Date(8640000000000000), label:"全部紀錄" };
+        return { start, end, label:"當日" };
+      }, [range, customDate]);
+
+      const filteredRecords = useMemo(() => records.filter(r => {
+        const d = new Date((r.date || todayLocal()) + "T12:00:00");
+        return d >= selectedRange.start && d < selectedRange.end;
+      }).sort((a,b) => (b.date || "").localeCompare(a.date || "") || b.id-a.id), [records, selectedRange]);
+
+      const ledgerTotals = useMemo(() => {
+        const income = filteredRecords.filter(r => r.type === "income").reduce((s,r)=>s+Number(r.amount||0),0);
+        // 存錢轉入會影響一般可用結餘，但不是消費；排除於消費統計與預算。
+        const expense = filteredRecords.filter(r => r.type === "expense" && !r.savingsTransfer).reduce((s,r)=>s+Number(r.amount||0),0);
+        const transferOut = filteredRecords.filter(r => r.type === "expense" && r.savingsTransfer && !r.monthlyCloseTransfer).reduce((s,r)=>s+Number(r.amount||0),0);
+        const transferBack = filteredRecords.filter(r => r.type === "transfer_in" && r.savingsTransfer).reduce((s,r)=>s+Number(r.amount||0),0);
+        return { income, expense, transferOut, transferBack, balance: income-expense-transferOut+transferBack };
+      }, [filteredRecords]);
+      const { income: totalIncome, expense: totalExpense, transferOut: transferOutTotal, transferBack: transferBackTotal, balance } = ledgerTotals;
+
+      // 分析資料只統計真正消費，不把存錢轉移當成消費。
+      const expenseRecords = useMemo(() => filteredRecords.filter(r => r.type === "expense" && !r.savingsTransfer), [filteredRecords]);
+      const incomeRecords = useMemo(() => filteredRecords.filter(r => r.type === "income"), [filteredRecords]);
+      const categoryTotals = useMemo(() => Object.entries(expenseRecords.reduce((acc,r) => {
+        const key = r.category || "未分類";
+        acc[key] = (acc[key] || 0) + Number(r.amount || 0);
+        return acc;
+      }, {})).map(([name,value]) => ({name,value}))
+        .sort((a,b) => b.value-a.value), [expenseRecords]);
+      const dailyTotals = useMemo(() => Object.entries(expenseRecords.reduce((acc,r) => {
+        const key = r.date || "日期不明";
+        acc[key] = (acc[key] || 0) + Number(r.amount || 0);
+        return acc;
+      }, {})).map(([date,value]) => ({date,value}))
+        .sort((a,b) => a.date.localeCompare(b.date)), [expenseRecords]);
+      const monthlyTotals = useMemo(() => Object.entries(expenseRecords.reduce((acc,r) => {
+        const key = (r.date || "").slice(0,7) || "日期不明";
+        acc[key] = (acc[key] || 0) + Number(r.amount || 0);
+        return acc;
+      }, {})).map(([month,value]) => ({month,value})).sort((a,b)=>a.month.localeCompare(b.month)), [expenseRecords]);
+      const yearForMonthlyChart = Number(customDate.slice(0,4));
+      const yearMonthlyChart = Array.from({length:12}, (_,i) => {
+        const month = `${yearForMonthlyChart}-${String(i+1).padStart(2,"0")}`;
+        const found = monthlyTotals.find(item => item.month === month);
+        return {month, value: found ? found.value : 0};
+      });
+      const maxMonthlyValue = Math.max(1, ...yearMonthlyChart.map(m=>m.value));
+      const maxCategory = categoryTotals[0];
+      const maxExpenseDay = dailyTotals.reduce((best,item) => !best || item.value > best.value ? item : best, null);
+      const recordedExpenseDays = dailyTotals.length;
+      const averageExpensePerRecordedDay = recordedExpenseDays ? totalExpense / recordedExpenseDays : 0;
+      const categoryMaxValue = Math.max(1, ...categoryTotals.map(c=>c.value));
+      const dailyMaxValue = Math.max(1, ...dailyTotals.map(d=>d.value));
+      // 星期開銷分析：只統計真正消費，排除存錢轉出與存款內部操作。
+      // 「全部」範圍以目前帳本最早至最晚紀錄日期計算平均，避免掃描無限日期。
+      const weekdayLabels = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+      const datedRecords = useMemo(() => records.filter(r => /^\d{4}-\d{2}-\d{2}$/.test(r.date || "")).slice().sort((a,b)=>a.date.localeCompare(b.date)), [records]);
+      const weekdayStart = range === "all" && datedRecords.length ? new Date(datedRecords[0].date + "T12:00:00") : new Date(selectedRange.start);
+      const weekdayEnd = range === "all" && datedRecords.length ? new Date(datedRecords[datedRecords.length-1].date + "T12:00:00") : new Date(selectedRange.end);
+      if (range === "all" && datedRecords.length) weekdayEnd.setDate(weekdayEnd.getDate()+1);
+      const weekdayTotals = Array.from({length:7}, (_,i)=>({index:i,label:weekdayLabels[i],value:0,dayCount:0}));
+      expenseRecords.forEach(r=>{
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(r.date || "")) return;
+        const d = new Date(r.date + "T12:00:00");
+        const idx = (d.getDay()+6)%7;
+        weekdayTotals[idx].value += Number(r.amount||0);
+      });
+      if (weekdayStart instanceof Date && weekdayEnd instanceof Date && !Number.isNaN(weekdayStart.getTime()) && !Number.isNaN(weekdayEnd.getTime()) && weekdayStart < weekdayEnd && (range !== "all" || datedRecords.length)) {
+        const cursor = new Date(weekdayStart.getFullYear(),weekdayStart.getMonth(),weekdayStart.getDate(),12);
+        const end = new Date(weekdayEnd.getFullYear(),weekdayEnd.getMonth(),weekdayEnd.getDate(),12);
+        while (cursor < end) {
+          weekdayTotals[(cursor.getDay()+6)%7].dayCount += 1;
+          cursor.setDate(cursor.getDate()+1);
+        }
+      }
+      const weekdayTotalsWithAverage = weekdayTotals.map(item=>({...item,average:item.dayCount ? item.value/item.dayCount : 0}));
+      const weekdayDisplayValue = item => weekdayMetric === "average" ? item.average : item.value;
+      const weekdayMaxValue = Math.max(1, ...weekdayTotalsWithAverage.map(weekdayDisplayValue));
+      const weekdayHighest = weekdayTotalsWithAverage.reduce((best,item)=>!best || weekdayDisplayValue(item)>weekdayDisplayValue(best)?item:best,null);
+      const analysisSummary = expenseRecords.length === 0
+        ? "這個統計範圍還沒有支出紀錄。先持續記帳，資料累積後就能看出消費趨勢。"
+        : `${selectedRange.label}共記錄 ${expenseRecords.length} 筆支出，合計 NT$${money(totalExpense)}；${maxCategory ? `支出最高的類別是「${maxCategory.name}」，共 NT$${money(maxCategory.value)}（${totalExpense ? (maxCategory.value/totalExpense*100).toFixed(1) : "0.0"}%）。` : ""}${maxExpenseDay ? `單日最高支出為 ${dateLabel(maxExpenseDay.date)}，NT$${money(maxExpenseDay.value)}。` : ""}有支出的日期平均每天 NT$${money(averageExpensePerRecordedDay)}。${incomeRecords.length ? `同期收入 NT$${money(totalIncome)}，收支結餘 NT$${money(balance)}。` : "目前此範圍沒有收入紀錄，結餘只反映已記錄的支出。"}`;
+
+      const todayExpense = useMemo(() => records.filter(r => r.type==="expense" && !r.savingsTransfer && r.date===currentDate).reduce((s,r)=>s+Number(r.amount||0),0), [records, currentDate]);
+      // 一般消費仍用於預算與消費分析；存錢轉入另外計入「總流出」，避免誤以為這筆錢仍可花用。
+      const monthExpense = useMemo(() => records.filter(r => r.type==="expense" && !r.savingsTransfer && r.date && r.date.slice(0,7)===currentDate.slice(0,7)).reduce((s,r)=>s+Number(r.amount||0),0), [records, currentDate]);
+      const monthSavingsTransfer = useMemo(() => records.filter(r => r.type==="expense" && r.savingsTransfer && !r.monthlyCloseTransfer && r.date && r.date.slice(0,7)===currentDate.slice(0,7)).reduce((s,r)=>s+Number(r.amount||0),0), [records, currentDate]);
+      const monthIncome = useMemo(() => records.filter(r => r.type==="income" && r.date && r.date.slice(0,7)===currentDate.slice(0,7)).reduce((s,r)=>s+Number(r.amount||0),0), [records, currentDate]);
+      const monthTransferBack = useMemo(() => records.filter(r => r.type==="transfer_in" && r.savingsTransfer && r.date && r.date.slice(0,7)===currentDate.slice(0,7)).reduce((s,r)=>s+Number(r.amount||0),0), [records, currentDate]);
+      // 本月結餘＝收入－一般消費－從結餘存入＋舊版存款轉回；存錢轉入不混入支出。
+      const monthBalance = monthIncome - monthExpense - monthSavingsTransfer + monthTransferBack;
+      const budgetProgress = settings.monthlyBudget > 0 ? Math.min(100, monthExpense / settings.monthlyBudget * 100) : 0;
+
+      // 分類採「先選大類，再選細項」；沒有細項的大類不顯示第二層
+      const mainCategories = ["飲食","交通","日常用品","學業","副業","娛樂","醫療","帳單","其他"];
+      const subcategories = {
+        "飲食": ["早餐","午餐","晚餐","甜點","宵夜","其他"],
+        "日常用品": ["洗衣費","清潔衛生用品","衣物","其他"],
+        "副業": ["繪畫用品","COS攝影","周邊商品"],
+        "娛樂": ["遊玩","動漫週邊收藏","其他"],
+        "帳單": ["水費","電費"]
+      };
+      const incomeCategories = ["薪資/打工","零用錢","獎學金","任務報酬","副業收入","退款","其他"];
+      const selectedMainCategory = type === "expense" ? (category.includes("－") ? category.split("－")[0] : (mainCategories.includes(category) ? category : "其他")) : category;
+      const selectedSubCategory = type === "expense" && category.includes("－") ? category.split("－").slice(1).join("－") : "";
+      const categories = type === "expense" ? mainCategories : incomeCategories;
+      const currentSubcategories = subcategories[selectedMainCategory] || [];
+      const categoryPieTotals = useMemo(() => Object.entries(expenseRecords.reduce((acc, r) => {
+        const raw = r.category || "其他";
+        const main = raw.includes("－") ? raw.split("－")[0] : raw;
+        const normalized = ({"學習":"學業", "創作/周邊":"副業", "服飾":"日常用品"})[main] || (mainCategories.includes(main) ? main : "其他");
+        acc[normalized] = (acc[normalized] || 0) + Number(r.amount || 0);
+        return acc;
+      }, {})).map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value), [expenseRecords]);
+      const pieColors = ["#f59e0b","#38bdf8","#34d399","#f472b6","#a78bfa","#fb7185","#facc15","#60a5fa","#94a3b8"];
+      let pieCursor = 0;
+      const categoryPieGradient = categoryPieTotals.length ? `conic-gradient(${categoryPieTotals.map((item,i)=>{const start=pieCursor;pieCursor+=totalExpense ? item.value/totalExpense*100 : 0;return `${pieColors[i%pieColors.length]} ${start}% ${pieCursor}%`;}).join(",")})` : "#334155";
+      const historyGroups = useMemo(() => {
+        const groups = {};
+        records.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"") || b.id-a.id).forEach(r => {
+          const d = new Date((r.date || todayLocal()) + "T12:00:00");
+          let key, label;
+          if (historyGroup === "day") {
+            key = r.date || todayLocal(); label = dateLabel(key);
+          } else if (historyGroup === "week") {
+            const start = startOfWeek(d); const end = new Date(start); end.setDate(end.getDate()+6);
+            key = `${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,"0")}-${String(start.getDate()).padStart(2,"0")}`;
+            label = `${dateLabel(key)} ～ ${dateLabel(`${end.getFullYear()}-${String(end.getMonth()+1).padStart(2,"0")}-${String(end.getDate()).padStart(2,"0")}`)}`;
+          } else if (historyGroup === "year") {
+            key = String(d.getFullYear()); label = `${key} 年`;
+          } else {
+            key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; label = `${d.getFullYear()} 年 ${d.getMonth()+1} 月`;
+          }
+          if (!groups[key]) groups[key] = {label, records:[], income:0, expense:0, transferOut:0};
+          groups[key].records.push(r);
+          if (r.type === "income") groups[key].income += Number(r.amount||0);
+          else if (r.type === "expense" && !r.savingsTransfer) groups[key].expense += Number(r.amount||0);
+          else if (r.type === "expense" && r.savingsTransfer) groups[key].transferOut = (groups[key].transferOut||0) + Number(r.amount||0);
+        });
+        return Object.entries(groups).sort((a,b)=>b[0].localeCompare(a[0])).map(([key,value])=>({key,...value}));
+      }, [records, historyGroup]);
+
+      function resetForm() {
+        setEditingId(null); setAmount(""); setNote(""); setRecordDate(todayLocal()); setRecordDateManual(false);
+        setPayment("現金"); setType("expense"); setCategory("日常用品－其他");
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        const value = Number(amount);
+        if (!amount || !Number.isFinite(value) || value <= 0) {
+          setNotice("請輸入大於 0 的有效金額。"); return;
+        }
+        const old = editingId ? records.find(r=>r.id===editingId) : null;
+        const item = {
+          id: editingId || Date.now(),
+          type, amount: value, category,
+          note: note.trim() || (type==="expense" ? "未填寫品項" : "未填寫收入來源"),
+          date: recordDate || todayLocal(), payment,
+          createdAt: old ? old.createdAt : new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        setRecords(prev => editingId ? prev.map(r=>r.id===editingId ? item : r) : [item,...prev]);
+        if (type === "expense") {
+          if (value > 1000) setDialog("佐助：「這筆超過 NT$1,000。先確認金額、品項和付款紀錄，別急著責怪自己。」");
+          else setDialog("鳴人：「記下來了！這樣之後就找得到啦！」\n佐助：「嗯。每次記一點，月底就不用憑記憶猜了。」");
+        } else setDialog("鳴人：「收入也記好了！」\n佐助：「很好。先把必要支出留起來，再決定能花多少。」");
+        setNotice(editingId ? "紀錄已更新。" : "紀錄已新增。");
+        resetForm();
+      }
+
+      function editRecord(r) {
+        setEditingId(r.id); setType(r.type); setAmount(String(r.amount));
+        const legacyCategory = ({"飲食":"飲食－其他","日常用品":"日常用品－其他","學習":"學業","創作/周邊":"副業","服飾":"日常用品－衣物","日常用品－生活雜支":"日常用品－其他","日常用品－洗衣精/柔軟精":"日常用品－清潔衛生用品","日常用品－清潔用品":"日常用品－清潔衛生用品","日常用品－衛生用品":"日常用品－清潔衛生用品","創作/周邊－繪畫用品":"副業－繪畫用品","創作/周邊－COS/攝影":"副業－COS攝影","創作/周邊－周邊商品":"副業－周邊商品","娛樂－遊戲":"娛樂－遊玩","娛樂－影音訂閱":"娛樂－其他","娛樂－聚會/活動":"娛樂－遊玩","帳單－水電/其他":"帳單－水費"})[r.category] || r.category;
+        const categoryParts = legacyCategory.split("－");
+        const categoryMain = categoryParts[0];
+        const allowedSubs = ({"飲食":["早餐","午餐","晚餐","甜點","宵夜","其他"],"日常用品":["洗衣費","清潔衛生用品","衣物","其他"],"副業":["繪畫用品","COS攝影","周邊商品"],"娛樂":["遊玩","動漫週邊收藏","其他"],"帳單":["水費","電費"]})[categoryMain];
+        const normalizedCategory = categoryParts.length > 1
+          ? (allowedSubs ? `${categoryMain}－${allowedSubs.includes(categoryParts.slice(1).join("－")) ? categoryParts.slice(1).join("－") : allowedSubs[allowedSubs.length-1]}` : ({"學習":"學業","創作/周邊":"副業"})[categoryMain] || categoryMain)
+          : (({"學習":"學業","創作/周邊":"副業","服飾":"日常用品"})[legacyCategory] || legacyCategory);
+        setCategory(normalizedCategory);
+        setNote(r.note); setRecordDate(r.date); setPayment(r.payment || "現金");
+        window.scrollTo({top:0,behavior:"smooth"});
+      }
+      function deleteRecord(id) {
+        if (window.confirm("確定刪除這筆紀錄？刪除後無法從本機直接復原，建議先匯出備份。")) {
+          setRecords(prev=>prev.filter(r=>r.id!==id)); setNotice("紀錄已刪除。");
+        }
+      }
+      function exportCSV() {
+        const headers = ["ID","日期","類型","金額(NT$)","分類","備註","付款方式","建立時間","更新時間"];
+        const rows = records.slice().sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(r=>[
+          r.id,r.date,r.type==="income"?"收入":r.type==="transfer_in"?"存款轉回":"支出",r.amount,r.category,r.note,r.payment||"",r.createdAt||"",r.updatedAt||""
+        ]);
+        const csv = [headers,...rows].map(row=>row.map(v=>`"${String(v ?? "").replace(/"/g,'""')}"`).join(",")).join("\r\n");
+        const blob = new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a"); a.href=url; a.download=`佐鳴記帳_${todayLocal()}.csv`; a.click();
+        URL.revokeObjectURL(url);
+        setNotice("已匯出 Excel 可開啟的 CSV 備份。這不是 OneDrive 自動同步。");
+      }
+      function backupJSON() {
+        const blob = new Blob([JSON.stringify({records,settings,savingsGoals,savingsTransactions,monthlyClosings,exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});
+        const url=URL.createObjectURL(blob); const a=document.createElement("a");
+        a.href=url; a.download=`佐鳴記帳備份_${todayLocal()}.json`; a.click(); URL.revokeObjectURL(url);
+        setNotice("JSON 備份已下載。請保存在安全的位置。");
+      }
+      function importJSON(e) {
+        const file=e.target.files?.[0]; if(!file) return;
+        const reader=new FileReader();
+        reader.onload=()=>{
+          try {
+            const data=JSON.parse(reader.result);
+            if(!Array.isArray(data.records)) throw new Error("format");
+            if(window.confirm(`匯入 ${data.records.length} 筆紀錄？這會將匯入資料與現有紀錄合併，重複 ID 會以匯入資料為準。`)) {
+              setRecords(prev=>{
+                const map=new Map(prev.map(r=>[String(r.id),r]));
+                data.records.forEach(r=>map.set(String(r.id),r));
+                return Array.from(map.values());
+              });
+              if(data.settings) setSettings(data.settings);
+              if(Array.isArray(data.savingsGoals)) setSavingsGoals(data.savingsGoals);
+              if(Array.isArray(data.savingsTransactions)) setSavingsTransactions(data.savingsTransactions);
+              if(Array.isArray(data.monthlyClosings)) setMonthlyClosings(data.monthlyClosings);
+              setNotice("備份匯入完成。請檢查紀錄是否正確。");
+            }
+          } catch(err) { setNotice("匯入失敗：請選擇本網站匯出的 JSON 備份檔。"); }
+        };
+        reader.readAsText(file); e.target.value="";
+      }
+      function saveBudgets(e) {
+        e.preventDefault();
+        setSettings({dailyBudget:Math.max(0,Number(dailyBudgetInput)||0),monthlyBudget:Math.max(0,Number(monthlyBudgetInput)||0)});
+        setBudgetOpen(false); setNotice("預算設定已儲存。");
+      }
+      // 保留既有分類內部值，讓舊目標不會因改名而失聯；畫面顯示新名稱。
+      const savingsGroups = ["佐鳴周邊類", "水電費類", "藍色盒子｜小零用錢類", "其他"];
+      const savingsGroupLabels = { "佐鳴周邊類":"佐鳴周邊類｜我的青蛙錢包", "水電費類":"生活開銷｜水電費類", "藍色盒子｜小零用錢類":"藍色盒子｜小零用錢類", "其他":"其他" };
+      const savingsGroupMeta = {
+        "佐鳴周邊類": { title: "佐鳴周邊類｜我的青蛙錢包", icon: "🐸", color: "border-rose-400/40", ledgerCategory: "青蛙錢包" },
+        "水電費類": { title: "生活開銷｜水電費類", icon: "💧", color: "border-sky-400/40", ledgerCategory: "水電費類" },
+        "藍色盒子｜小零用錢類": { title: "藍色盒子｜小零用錢類", icon: "🩵", color: "border-blue-400/40", ledgerCategory: "小零用錢" },
+        "其他": { title: "其他", icon: "🌱", color: "border-emerald-400/40", ledgerCategory: "其他存錢" }
+      };
+      const isMonthlyPiggyBank = goal => !!goal && (goal.monthlyClosePiggyBank || goal.name === "存錢筒");
+      const goalBalances = useMemo(() => {
+        const balances = new Map();
+        savingsTransactions.forEach(t => {
+          const key = String(t.goalId);
+          balances.set(key, (balances.get(key) || 0) + (t.type==="deposit" ? Number(t.amount||0) : -Number(t.amount||0)));
+        });
+        return balances;
+      }, [savingsTransactions]);
+      const goalBalance = goalId => goalBalances.get(String(goalId)) || 0;
+      const savingsTotal = savingsGoals.reduce((sum,g)=>sum+goalBalance(g.id),0);
+      const savingsDeposited = savingsTransactions.filter(t=>t.type==="deposit").reduce((sum,t)=>sum+Number(t.amount||0),0);
+      const savingsWithdrawn = savingsTransactions.filter(t=>t.type!=="deposit").reduce((sum,t)=>sum+Number(t.amount||0),0);
+      const closingMonthRecords = records.filter(r => (r.date || "").slice(0,7) === closingMonth);
+      const closingIncome = closingMonthRecords.filter(r => r.type === "income").reduce((sum,r)=>sum+Number(r.amount||0),0);
+      const closingExpenses = closingMonthRecords.filter(r => r.type === "expense" && !r.savingsTransfer).reduce((sum,r)=>sum+Number(r.amount||0),0);
+      const closingTransferOut = closingMonthRecords.filter(r => r.type === "expense" && r.savingsTransfer && !r.monthlyCloseTransfer).reduce((sum,r)=>sum+Number(r.amount||0),0);
+      const closingTransferIn = closingMonthRecords.filter(r => r.type === "transfer_in" && r.savingsTransfer).reduce((sum,r)=>sum+Number(r.amount||0),0);
+      const closingBalance = closingIncome - closingExpenses - closingTransferOut + closingTransferIn;
+      const closedMonthEntry = monthlyClosings.find(c => c.month === closingMonth);
+      const isCurrentOrFutureClosingMonth = closingMonth >= todayLocal().slice(0,7);
+      function addSavingsGoal(e) {
+        e.preventDefault();
+        if (!goalName.trim()) { setNotice("請輸入存錢目標名稱。"); return; }
+        const target = Math.max(0, Number(goalTarget)||0);
+        const monthly = Math.max(0, Number(goalMonthly)||0);
+        const goal = { id: Date.now(), group: goalGroup, name: goalName.trim(), target, monthly, createdAt: new Date().toISOString() };
+        setSavingsGoals(prev=>[goal,...prev]); setSelectedGoalId(String(goal.id));
+        setGoalName(""); setGoalTarget(""); setGoalMonthly("");
+        setNotice(`已新增存錢目標「${goal.name}」。`);
+      }
+      function applySavingsAction(action, goal, amountValue, noteValue, sourceValue=savingSource, dateValue=todayLocal()) {
+        if (isMonthlyPiggyBank(goal) && action === "deposit" && sourceValue !== "extra") { setNotice("存錢筒只能透過月底結算或「額外存入」增加金額。"); return false; }
+        if (isMonthlyPiggyBank(goal) && action === "deposit" && sourceValue === "balance") { setNotice("存錢筒不提供從一般收支結餘存入，請選擇額外存入。"); return false; }
+        const value = Number(amountValue);
+        if (!goal || !Number.isFinite(value) || value<=0) { setNotice("請選擇目標並輸入大於 0 的金額。"); return false; }
+        if (action!=="deposit" && value>goalBalance(goal.id)) { setNotice("金額超過這個目標目前的存款，請確認後再操作。"); return false; }
+        const tx = { id: Date.now()+Math.floor(Math.random()*1000), goalId: goal.id, type: action, source: action==="deposit"?sourceValue:null, amount: value, date: dateValue, note: noteValue.trim() || (action==="deposit"?"手動存入":"存款支付") };
+        setSavingsTransactions(prev=>[tx,...prev]);
+        const meta = savingsGroupMeta[goal.group] || savingsGroupMeta["其他"];
+        if (action === "deposit" && sourceValue === "balance") {
+          const ledgerRecord = { id: Date.now()+2000, type: "expense", amount: value, category: meta.ledgerCategory, note: `存入存錢所：${goal.name}`, date: dateValue, payment: "收支結餘存入", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), savingsTransfer: true };
+          setRecords(prev=>[ledgerRecord,...prev]);
+          setNotice(`已從收支記帳所結餘存入 NT$${money(value)} 至「${goal.name}」。這是資金移轉，不列為一般消費。`);
+        } else if (action === "deposit") {
+          setNotice(`已將額外收入 NT$${money(value)} 存入「${goal.name}」。不會新增到一般收支記帳所。`);
+        } else {
+          setNotice(`已從「${goal.name}」扣除 NT$${money(value)}。這筆使用存款只記在存錢所，不會在一般記帳重複新增支出。`);
+        }
+        setSavingAmount(""); setSavingNote(""); return true;
+      }
+      function handleSavingsSubmit(e) {
+        e.preventDefault();
+        const goal = savingsGoals.find(g=>String(g.id)===String(selectedGoalId));
+        applySavingsAction(savingAction, goal, savingAmount, savingNote);
+      }
+      function monthlyDeposit(goal) {
+        if (isMonthlyPiggyBank(goal)) { setNotice("「存錢筒｜每月結餘」只能透過月底結算累積，不能使用固定存入功能。"); return; }
+        if (!goal || !(Number(goal.monthly)>0)) { setNotice("請先為這個目標設定每月固定存入金額。"); return; }
+        const month = todayLocal().slice(0,7);
+        const exists = savingsTransactions.some(t=>String(t.goalId)===String(goal.id) && t.type==="deposit" && t.note===`每月固定存入 ${month}`);
+        if (exists) { setNotice(`「${goal.name}」本月已記錄固定存入，避免重複入帳。`); return; }
+        if (window.confirm(`確認本月從收支結餘存入「${goal.name}」NT$${money(goal.monthly)}？`)) applySavingsAction("deposit", goal, goal.monthly, `每月固定存入 ${month}`, "balance");
+      }
+      function closeMonthIntoPiggyBank() {
+        const month = closingMonth;
+        if (!/^\d{4}-\d{2}$/.test(month)) { setNotice("請選擇有效月份。"); return; }
+        if (month >= todayLocal().slice(0,7)) { setNotice("請等這個月份結束後，再到下個月進行月結轉存。"); return; }
+        const alreadyClosed = monthlyClosings.some(c => c.month === month)
+          || savingsTransactions.some(t => t.note === `月結轉存 ${month}`)
+          || records.some(r => r.monthlyCloseTransfer && (r.date || "").slice(0,7) === month);
+        if (alreadyClosed) { setNotice(`${month} 已經結算過了，為避免重複存入，這個月份不能再次結算。`); return; }
+        const piggy = savingsGoals.find(g => g.monthlyClosePiggyBank || g.name === "存錢筒");
+        if (!piggy) { setNotice("找不到「存錢筒」目標，請重新載入頁面後再試。"); return; }
+        const value = Math.max(0, Math.round((closingBalance + Number.EPSILON) * 100) / 100);
+        if (!window.confirm(`確認結算 ${month}？\n當月收入：NT$${money(closingIncome)}\n實際支出：NT$${money(closingExpenses)}\n已從結餘存入：NT$${money(closingTransferOut)}\n本次轉入存錢筒：NT$${money(value)}\n\n原有收支紀錄會保留，同一月份不能重複結算。`)) return;
+        const lastDay = new Date(Number(month.slice(0,4)), Number(month.slice(5,7)), 0).getDate();
+        const closingDate = `${month}-${String(lastDay).padStart(2,"0")}`;
+        if (value > 0) {
+          const txId = Date.now() + Math.floor(Math.random()*1000);
+          const now = new Date().toISOString();
+          const tx = { id: txId, goalId: piggy.id, type: "deposit", source: "balance", monthlyClose: true, amount: value, date: closingDate, note: `月結轉存 ${month}` };
+          const ledgerRecord = { id: txId + 2000, type: "expense", amount: value, category: "每月結餘轉存", note: `月結轉存至存錢筒：${month}`, date: closingDate, payment: "月底結算轉存", createdAt: now, updatedAt: now, savingsTransfer: true, monthlyCloseTransfer: true };
+          setSavingsTransactions(prev => [tx, ...prev]);
+          setRecords(prev => [ledgerRecord, ...prev]);
+        }
+        setMonthlyClosings(prev => [...prev, { month, goalId: piggy.id, amount: value, closedAt: new Date().toISOString(), closingDate }]);
+        setNotice(value > 0 ? `已完成 ${month} 月結！NT$${money(value)} 已加入「存錢筒」。月檢視保留原本收支結餘，年檢視與全部檢視保留所有紀錄。` : `${month} 已結算；本月沒有正結餘，因此未轉入存錢筒。`);
+      }
+      function startEditSavingsGoal(goal) {
+        if (!goal || isMonthlyPiggyBank(goal)) return;
+        setEditingGoalId(String(goal.id));
+        setEditingGoalGroup(goal.group || "其他");
+        setEditingGoalName(goal.name || "");
+        setEditingGoalTarget(String(goal.target || ""));
+        setEditingGoalMonthly(String(goal.monthly || ""));
+      }
+      function saveEditedSavingsGoal(goal) {
+        if (!goal || String(goal.id)!==String(editingGoalId)) return;
+        const name = editingGoalName.trim();
+        const target = editingGoalTarget.trim()==="" ? 0 : Number(editingGoalTarget);
+        const monthly = editingGoalMonthly.trim()==="" ? 0 : Number(editingGoalMonthly);
+        if (!name) { setNotice("目標名稱不能空白。"); return; }
+        if (!Number.isFinite(target) || target<0 || !Number.isFinite(monthly) || monthly<0) { setNotice("目標金額與每月固定存入請填寫 0 或正數。"); return; }
+        setSavingsGoals(prev=>prev.map(g=>String(g.id)===String(goal.id)?{...g,group:editingGoalGroup,name,target,monthly}:g));
+        setEditingGoalId(null);
+        setNotice(`已更新「${name}」的存錢目標設定。原有存款與交易紀錄不會變動。`);
+      }
+      function deleteSavingsGoal(goal) {
+        if (isMonthlyPiggyBank(goal)) { setNotice("「存錢筒」是系統月結專用目標，不能刪除。"); return; }
+        if (goalBalance(goal.id)!==0) { setNotice("這個目標還有餘額，請先提領或使用完再刪除，避免存款紀錄失去對應。"); return; }
+        if (window.confirm(`確定刪除存錢目標「${goal.name}」？`)) { setSavingsGoals(prev=>prev.filter(g=>g.id!==goal.id)); setSavingsTransactions(prev=>prev.filter(t=>String(t.goalId)!==String(goal.id))); setNotice("存錢目標已刪除。"); }
+      }
+
+      function chatSend(message=chatInput) {
+        const m=String(message || "").trim(); if(!m) return;
+        const lower=m.toLowerCase();
+        const expenseByCategory = Object.entries(records.filter(r=>r.type==="expense" && !r.savingsTransfer && r.date && r.date.slice(0,7)===todayLocal().slice(0,7)).reduce((acc,r)=>{const k=r.category||"未分類";acc[k]=(acc[k]||0)+Number(r.amount||0);return acc;},{})).sort((a,b)=>b[1]-a[1]);
+        const biggest = records.filter(r=>r.type==="expense" && r.date && r.date.slice(0,7)===todayLocal().slice(0,7)).sort((a,b)=>Number(b.amount)-Number(a.amount))[0];
+        if(/你好|嗨|哈囉|早安|晚安|在嗎|在不在/.test(m)) {
+          setDialog("鳴人：「我在我在！想聊什麼都可以！」\n佐助：「……我也在。要算帳、想買東西，還是今天心情不好，都可以說。」");
+        } else if(/謝謝|感謝|愛你|喜歡你|親|抱抱/.test(m)) {
+          setDialog("鳴人：「嘿嘿！有人陪著真的很棒吧！」\n佐助：「不用道謝。妳願意把事情說出來就好。……過來，抱一下。別什麼都自己扛。」");
+        } else if(/難過|不開心|壓力|焦慮|煩|累|崩潰|哭/.test(m)) {
+          setDialog("佐助：「先停一下，呼吸。現在不必立刻把所有問題解決。想說就慢慢說，我會聽。記帳不是拿來責備自己的，花了錢也不代表妳做錯了什麼。」");
+        } else if(/今天|今日/.test(m) && /花|支出|多少|帳/.test(m)) {
+          setDialog(`佐助：「今天目前支出 NT$${money(todayExpense)}。${todayExpense>settings.dailyBudget ? "已超過每日預算，先暫停非必要消費，別急著責怪自己。" : `距離每日預算還有 NT$${money(Math.max(0,settings.dailyBudget-todayExpense))}。`} 如果有漏記，現在補上就好。」`);
+        } else if(/收入|賺|薪水|打工/.test(m)) {
+          const incomeThisMonth=records.filter(r=>r.type==="income" && r.date && r.date.slice(0,7)===todayLocal().slice(0,7)).reduce((s,r)=>s+Number(r.amount||0),0);
+          setDialog(`佐助：「本月已記錄收入 NT$${money(incomeThisMonth)}，本月支出 NT$${money(monthExpense)}。目前紀錄的收支差額是 NT$${money(incomeThisMonth-monthExpense)}。先把必要開銷留好，再決定剩下的錢怎麼用。」`);
+        } else if(/預算|剩下|剩多少|還能花/.test(m)) {
+          setDialog(`佐助：「本月支出 NT$${money(monthExpense)}，月預算是 NT$${money(settings.monthlyBudget)}。${monthExpense>settings.monthlyBudget?`已超出 NT$${money(monthExpense-settings.monthlyBudget)}。先暫停非必要消費，看看哪些項目可以延後。`:`還剩 NT$${money(Math.max(0,settings.monthlyBudget-monthExpense))}，已使用 ${settings.monthlyBudget>0?(monthExpense/settings.monthlyBudget*100).toFixed(1):"0.0"}%。`} 預算是參考，不是拿來罵自己的。」`);
+        } else if(/分類|哪一類|花最多|最高支出|最大筆|最貴/.test(m)) {
+          if(/最大筆|最貴/.test(m) && biggest) setDialog(`佐助：「本月目前最大的一筆支出是「${biggest.note||biggest.category}」，分類 ${biggest.category}，金額 NT$${money(biggest.amount)}。先確認這筆是不是必要開銷，再決定要不要調整。」`);
+          else if(expenseByCategory.length) setDialog(`佐助：「本月支出最多的分類是「${expenseByCategory[0][0]}」，共 NT$${money(expenseByCategory[0][1])}。${expenseByCategory.length>1?`第二名是「${expenseByCategory[1][0]}」，NT$${money(expenseByCategory[1][1])}。`:""}分類高不代表一定浪費，還要看實際用途。」`);
+          else setDialog("佐助：「本月還沒有支出紀錄。先記幾筆，等資料累積起來，我才能幫妳看出消費趨勢。」");
+        } else if(/省錢|存錢|節省|怎麼辦|建議|改善/.test(m)) {
+          setDialog("佐助：「先做三件事：一、把固定必要支出和想買的東西分開；二、非急需的商品先放購物車一天；三、替每週的飲料、甜點或娛樂設一個妳做得到的上限。不要一下訂太嚴格，能持續比較重要。」");
+        } else if(/買|購物|下單|想要|值得|衝動/.test(m)) {
+          setDialog("佐助：「先回答我三個問題：這是現在就需要的嗎？買完會不會影響吃飯、交通或帳單？如果等三天再買，會有實際損失嗎？如果都不是急事，就先放三天。真的想要也沒關係，重點是清楚自己為什麼買。」");
+        } else if(/分析|月報|總結|整理/.test(m)) {
+          setDialog(`佐助：「本月目前收入已記錄金額請以明細為準；支出共 NT$${money(monthExpense)}。${expenseByCategory.length?`主要支出是「${expenseByCategory[0][0]}」NT$${money(expenseByCategory[0][1])}。`:"目前還沒有支出分類資料。"} ${monthExpense>settings.monthlyBudget?"這個月已超出預算，可以先檢視非必要支出。":"繼續記錄幾天，再比較各類支出會更準確。"} 不需要追求完美，先維持記帳習慣。」`);
+        } else if(/幫助|可以做什麼|功能|怎麼用/.test(m)) {
+          setDialog("鳴人：「可以問今天花多少、本月預算、收入、哪類花最多，也可以跟我們聊心情或購物猶豫！」\n佐助：「試著輸入：『今天花多少』、『本月分類分析』、『我想買一個東西』、『我最近壓力很大』或『教我怎麼省錢』。我會依照目前記帳資料和關鍵字回覆；這是本機規則式聊天，還不是連線 AI。」");
+        } else {
+          setDialog("佐助：「我在聽。妳可以跟我聊今天的心情、猶豫要不要買東西、怎麼安排預算，或直接問我本月支出和分類分析。若是記帳問題，說得越具體，我越能依照現有紀錄幫妳。」");
+        }
+        setChatInput("");
+      }
+
+      return <div className="max-w-2xl mx-auto p-3 sm:p-5 space-y-4 safe-bottom">
+        <header className="text-center py-5 px-3 bg-slate-800 rounded-2xl border border-amber-500/30 shadow-lg">
+          <div className="text-xs tracking-[0.25em] text-slate-400 mb-1">SASUKE X NARUTO</div>
+          <h1 className="text-2xl font-black text-amber-300">🍅🍥佐鳴記帳所</h1>
+          <p className="text-xs text-slate-400 mt-2">每筆都留下紀錄。慢慢整理，花得更安心。</p>
+          <div className="inline-flex items-center gap-2 mt-3 px-3 py-1.5 rounded-full bg-slate-900/80 border border-amber-400/30 text-amber-200 text-xs" aria-live="polite">
+            <i className="fa-regular fa-calendar-days"></i><span>系統日期（台灣）：{todayDisplay(currentDate)}</span>
+          </div>
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            <button onClick={()=>setShowCloudInfo(v=>!v)} className="text-xs px-3 py-1.5 rounded-full border border-sky-400/40 text-sky-200"><i className="fa-solid fa-cloud mr-1"></i>雲端/OneDrive 設定</button>
+            <button onClick={exportCSV} className="text-xs px-3 py-1.5 rounded-full bg-emerald-700 hover:bg-emerald-600"><i className="fa-solid fa-file-excel mr-1"></i>匯出 Excel CSV</button>
+            <button onClick={backupJSON} className="text-xs px-3 py-1.5 rounded-full bg-slate-700 hover:bg-slate-600"><i className="fa-solid fa-download mr-1"></i>備份</button>
+          </div>
+        </header>
+
+        {showCloudInfo && <section className="bg-sky-950/50 border border-sky-400/30 rounded-xl p-4 text-sm space-y-2">
+          <h2 className="font-bold text-sky-200">雲端同步尚未啟用</h2>
+          <p className="text-slate-300">目前版本會把紀錄保存在「這個瀏覽器的本機」。它可以重新開啟後保留資料，但不會自動同步到其他裝置，也尚未連接 OneDrive。</p>
+          <p className="text-slate-300">要完成真正的跨裝置雲端同步，需要設定 Microsoft Entra/Azure 應用程式登入與 Microsoft Graph 權限，並決定雲端資料庫或以 OneDrive Excel 作為資料來源。不能只在前端放入帳號密碼或秘密金鑰。</p>
+          <p className="text-xs text-sky-200">此處是設定提醒，不會假裝已連線。</p>
+        </section>}
+
+        {notice && <div className="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm flex justify-between gap-2"><span>{notice}</span><button onClick={()=>setNotice("")} aria-label="關閉訊息"><i className="fa-solid fa-xmark"></i></button></div>}
+
+        <nav aria-label="主要功能" className="grid grid-cols-3 sm:grid-cols-6 gap-2 bg-slate-900 p-2 rounded-xl border border-slate-700">
+          {[["home","🏠","首頁"],["ledger","📒","收支記帳"],["savings","🐸","存錢所"],["stats","📊","統計分析"],["tools","💡","生活工具"],["data","🗂️","資料管理"]].map(([key,icon,label])=>
+            <button key={key} onClick={()=>setActiveTab(key)} aria-current={activeTab===key?"page":undefined}
+              className={`rounded-lg py-2.5 px-1 text-xs sm:text-sm font-bold ${activeTab===key?(key==="savings"?"bg-sky-400 text-slate-950":"bg-amber-400 text-slate-950"):"text-slate-300 bg-slate-800/70"}`}>
+              <span className="block text-lg mb-0.5">{icon}</span>{label}
+            </button>)}
+        </nav>
+        {activeTab === "home" && <section className="space-y-4">
+          <div className="rounded-2xl border border-amber-400/30 bg-gradient-to-br from-blue-950/90 via-indigo-950/90 to-orange-950/60 p-4">
+            <h2 className="font-black text-lg text-amber-100">今日帳本總覽</h2>
+            <p className="text-xs text-slate-300 mt-1">系統日期：{todayDisplay(currentDate)} · 本月快速摘要</p>
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              <div className="rounded-xl bg-slate-950/60 p-3"><div className="text-xs text-emerald-200">本月收入</div><div className="text-xl font-black text-emerald-100">+${money(records.filter(r=>r.type==="income" && (r.date||"").slice(0,7)===currentDate.slice(0,7)).reduce((sum,r)=>sum+Number(r.amount||0),0))}</div></div>
+              <div className="rounded-xl bg-slate-950/60 p-3"><div className="text-xs text-rose-200">本月支出</div><div className="text-xl font-black text-rose-100">${money(monthExpense)}</div><div className="text-[10px] text-slate-400 mt-1">只計一般消費</div></div>
+              <div className="rounded-xl bg-slate-950/60 p-3"><div className="text-xs text-sky-200">存錢轉入</div><div className="text-xl font-black text-sky-100">-${money(monthSavingsTransfer)}</div></div>
+              <div className="rounded-xl bg-slate-950/60 p-3"><div className="text-xs text-amber-200">本月結餘</div><div className="text-xl font-black text-amber-100">${money(monthBalance)}</div></div>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-bold text-sm text-slate-200 mb-2">快速前往</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {[["ledger","📒 收支記帳所","新增收入、支出與查看紀錄"],["savings","🐸 佐鳴存錢所","存錢目標、存提款與月結"],["stats","📊 統計分析","日、週、月、年與全部分析"],["tools","💡 生活計算工具","電費計算等實用工具"],["data","🗂️ 系統資料管理","JSON 備份、匯入與 CSV"]].map(([key,title,desc])=>
+                <button key={key} onClick={()=>setActiveTab(key)} className="text-left rounded-xl border border-sky-300/20 bg-slate-800/90 p-3 hover:border-orange-300/50">
+                  <div className="font-bold text-sm text-amber-100">{title}</div><div className="text-[11px] text-slate-400 mt-1">{desc}</div>
+                </button>)}
+            </div>
+          </div>
+          <div className="rounded-xl border border-sky-300/20 bg-slate-900/70 p-3 text-xs text-slate-300">
+            <div className="font-bold text-sky-200">💙 使用小提醒</div>
+            <p className="mt-1">各功能改為分頁顯示；切換頁面時不需要的表單、歷史清單與分析圖表會卸載，減少同時顯示的內容。所有分頁仍共用原本的本機資料，不會把帳本拆成不同份。</p>
+          </div>
+        </section>}
+
+        {activeTab === "ledger" && <>
+        <section className="bg-slate-800 rounded-xl border border-amber-400/30 p-3">
+          <details>
+            <summary className="cursor-pointer list-none flex flex-col sm:flex-row sm:items-center justify-between gap-2"><span className="font-black text-amber-200">🗓️ 年度收支總覽 <span className="text-xs font-normal text-slate-400 ml-1">（點擊展開／收合）</span></span><span className="flex items-center gap-2" onClick={e=>e.stopPropagation()}><label className="text-xs text-slate-400">日期快速選擇<input type="date" value={customDate} onChange={e=>{setCustomDate(e.target.value);setCustomDateManual(true);if(e.target.value)setLedgerYear(e.target.value.slice(0,4));setRange("month");}} className="ml-2 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-sm"/></label><select value={ledgerYear} onChange={e=>setLedgerYear(e.target.value)} className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-sm">{Array.from(new Set([todayLocal().slice(0,4),...records.map(r=>(r.date||"").slice(0,4)).filter(Boolean)])).sort((a,b)=>b.localeCompare(a)).map(y=><option key={y} value={y}>{y} 年</option>)}</select></span></summary>
+            <div className="space-y-3 mt-3">
+              <p className="text-xs text-slate-400">可直接在收支記帳頁調整日期，日期也會同步作為統計分析的參考日期。選擇年份後，直接查看 1～12 月收入、一般支出、存錢轉入與結餘；月底結算轉入存錢筒不重複列為支出。</p>
+              <div className="overflow-x-auto"><table className="w-full text-xs min-w-[520px]"><thead><tr className="text-slate-400 border-b border-slate-700"><th className="text-left py-2">月份</th><th className="text-right">收入</th><th className="text-right">支出</th><th className="text-right">存錢轉入</th><th className="text-right">結餘</th></tr></thead><tbody>{Array.from({length:12},(_,i)=>{const m=String(i+1).padStart(2,"0"), key=`${ledgerYear}-${m}`;const rs=records.filter(r=>(r.date||"").slice(0,7)===key);const inc=rs.filter(r=>r.type==="income").reduce((a,r)=>a+Number(r.amount||0),0);const exp=rs.filter(r=>r.type==="expense"&&!r.savingsTransfer).reduce((a,r)=>a+Number(r.amount||0),0);const tr=rs.filter(r=>r.type==="expense"&&r.savingsTransfer&&!r.monthlyCloseTransfer).reduce((a,r)=>a+Number(r.amount||0),0);const bal=inc-exp-tr;return <tr key={key} className="border-b border-slate-800"><td className="py-2 text-slate-200">{i+1} 月</td><td className="text-right text-emerald-200">${money(inc)}</td><td className="text-right text-rose-200">${money(exp)}</td><td className="text-right text-sky-200">${money(tr)}</td><td className={`text-right font-bold ${bal>=0?"text-amber-200":"text-rose-300"}`}>${money(bal)}</td></tr>})}</tbody></table></div>
+            </div>
+          </details>
+        </section>
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="bg-slate-800 p-3 rounded-xl border border-emerald-500/20 text-center"><span className="text-xs text-emerald-300 block">收入</span><strong className="text-sm sm:text-lg text-emerald-200">+${money(totalIncome)}</strong></div>
+          <div className="bg-slate-800 p-3 rounded-xl border border-rose-500/20 text-center"><span className="text-xs text-rose-300 block">支出</span><strong className="text-sm sm:text-lg text-rose-200">-${money(totalExpense)}</strong></div>
+          <div className="bg-slate-800 p-3 rounded-xl border border-sky-500/20 text-center"><span className="text-xs text-sky-300 block">存錢轉入</span><strong className="text-sm sm:text-lg text-sky-200">-${money(transferOutTotal)}</strong></div>
+          <div className="bg-slate-800 p-3 rounded-xl border border-amber-500/20 text-center"><span className="text-xs text-amber-300 block">結餘</span><strong className={`text-sm sm:text-lg ${balance>=0?"text-amber-200":"text-rose-300"}`}>${money(balance)}</strong></div>
+        </section>
+
+        <section className="grid grid-cols-2 gap-2">
+          <div className={`p-3 rounded-xl border ${todayExpense>settings.dailyBudget?"bg-rose-950/50 border-rose-500/50":"bg-slate-800 border-slate-700"}`}>
+            <div className="text-xs text-slate-400">今日支出 / 每日預算</div>
+            <div className="font-bold mt-1">NT${money(todayExpense)} <span className="text-slate-500 font-normal">/ ${money(settings.dailyBudget)}</span></div>
+            {todayExpense>settings.dailyBudget && <div className="text-xs text-rose-300 mt-1">已超出每日預算</div>}
+          </div>
+          <div className={`p-3 rounded-xl border ${monthExpense>settings.monthlyBudget?"bg-rose-950/50 border-rose-500/50":"bg-slate-800 border-slate-700"}`}>
+            <div className="text-xs text-rose-200">本月支出（一般消費）</div>
+            <div className="font-bold mt-1 text-rose-100">NT${money(monthExpense)}</div>
+            <div className="text-[11px] text-slate-400 mt-1">月預算 ${money(settings.monthlyBudget)}</div>
+            <div className="text-[11px] text-sky-200">存錢轉入另列，會從本月結餘扣除：-${money(monthSavingsTransfer)}</div>
+            {monthExpense>settings.monthlyBudget && <div className="text-xs text-rose-300 mt-1">一般消費已超出月預算</div>}
+          </div>
+        </section>
+        <div className="flex justify-end"><button onClick={()=>setBudgetOpen(v=>!v)} className="text-xs text-sky-300 underline">設定每日/月預算</button></div>
+        {budgetOpen && <form onSubmit={saveBudgets} className="bg-slate-800 rounded-xl p-4 border border-slate-700 space-y-3">
+          <h2 className="font-bold">預算設定（新台幣）</h2>
+          <label className="block text-sm">每日預算<input type="number" min="0" value={dailyBudgetInput} onChange={e=>setDailyBudgetInput(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2"/></label>
+          <label className="block text-sm">每月預算<input type="number" min="0" value={monthlyBudgetInput} onChange={e=>setMonthlyBudgetInput(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2"/></label>
+          <button className="w-full bg-sky-700 rounded-lg p-2 font-bold">儲存預算</button>
+        </form>}
+
+        </>}{activeTab === "stats" && <>
+        <section className="bg-slate-800 rounded-xl p-3 border border-slate-700">
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between mb-3">
+            <h2 className="font-bold text-sm">收支統計</h2>
+            <input aria-label="選擇統計日期" type="date" value={customDate} onChange={e=>{setCustomDate(e.target.value);setCustomDateManual(true);}} className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-sm"/>{customDateManual && <button type="button" onClick={()=>{setCustomDate(todayLocal());setCustomDateManual(false);}} className="text-xs text-sky-300 underline">回到今天</button>}
+          </div>
+          <div className="grid grid-cols-5 gap-1 text-xs">
+            {[["day","當日"],["week","本週"],["month","本月"],["year","本年"],["all","全部"]].map(([v,label])=><button key={v} onClick={()=>setRange(v)} className={`rounded-lg py-2 ${range===v?"bg-amber-400 text-slate-950 font-bold":"bg-slate-700 text-slate-300"}`}>{label}</button>)}
+          </div>
+          <p className="text-xs text-slate-400 mt-2">統計範圍：{selectedRange.label}{range!=="all" ? `（參考日期 ${dateLabel(customDate)}）` : ""}。週統計以星期日為起始日。</p>
+        </section>
+
+        <details className="bg-slate-800 p-4 rounded-xl border border-amber-500/30 space-y-4" open>
+          <summary className="cursor-pointer list-none flex items-center justify-between gap-2">
+            <div>
+              <h2 className="font-bold text-amber-200">📊 消費分析與統整 <span className="text-xs text-slate-400 font-normal">（點擊展開／收合）</span></h2>
+              <p className="text-xs text-slate-400 mt-1">依上方選取的日期範圍自動更新</p>
+            </div>
+            <span className="text-2xl">📈</span>
+          </summary>
+          <div className="space-y-4 mt-4">
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="bg-slate-900/80 rounded-lg p-3"><div className="text-xs text-slate-400">支出筆數</div><div className="text-lg font-black text-rose-200 mt-1">{expenseRecords.length} 筆</div></div>
+            <div className="bg-slate-900/80 rounded-lg p-3"><div className="text-xs text-slate-400">支出總額</div><div className="text-lg font-black text-rose-200 mt-1">${money(totalExpense)}</div></div>
+            <div className="bg-slate-900/80 rounded-lg p-3"><div className="text-xs text-slate-400">收入總額</div><div className="text-lg font-black text-emerald-200 mt-1">${money(totalIncome)}</div></div>
+            <div className="bg-slate-900/80 rounded-lg p-3"><div className="text-xs text-slate-400">收支結餘</div><div className={`text-lg font-black mt-1 ${balance>=0?"text-amber-200":"text-rose-300"}`}>${money(balance)}</div></div>
+          </div>
+
+          <div className="bg-slate-900/70 rounded-xl p-3 space-y-3">
+            <h3 className="text-sm font-bold">🥧 分類占比圓餅圖</h3>
+            {categoryPieTotals.length === 0 ? <p className="text-xs text-slate-500">累積支出紀錄後，這裡會顯示各大分類占比。</p> : <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div role="img" aria-label="各大分類支出占比圓餅圖" className="w-44 h-44 rounded-full shrink-0 border border-slate-700" style={{background:categoryPieGradient}}></div>
+              <div className="w-full space-y-2">{categoryPieTotals.map((item,i)=><div key={item.name} className="flex items-center justify-between gap-3 text-xs"><span className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-sm" style={{background:pieColors[i%pieColors.length]}}></span>{item.name}</span><span className="whitespace-nowrap">NT${money(item.value)} · {totalExpense ? (item.value/totalExpense*100).toFixed(1) : "0.0"}%</span></div>)}</div>
+            </div>}
+          </div>
+
+          <div className="bg-slate-900/70 rounded-xl p-3 space-y-2">
+            <h3 className="text-sm font-bold">🧾 分類支出分析（含細項）</h3>
+            {categoryTotals.length === 0 ? <p className="text-xs text-slate-500">目前沒有可分析的支出。</p> : categoryTotals.map(item=><div key={item.name} className="space-y-1">
+              <div className="flex justify-between gap-3 text-xs"><span>{item.name}</span><span className="whitespace-nowrap">NT${money(item.value)} · {totalExpense ? (item.value/totalExpense*100).toFixed(1) : "0.0"}%</span></div>
+              <div className="h-2 rounded-full bg-slate-700 overflow-hidden"><div className="h-full rounded-full bg-amber-400" style={{width:`${item.value/categoryMaxValue*100}%`}}></div></div>
+            </div>)}
+          </div>
+
+
+          <div className="bg-gradient-to-br from-blue-950/80 via-slate-900/90 to-orange-950/50 border border-sky-300/25 rounded-xl p-3 space-y-3">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <h3 className="text-sm font-bold text-sky-100">🗓️ 星期開銷分析</h3>
+                <p className="text-[11px] text-slate-400 mt-1">依上方統計範圍，將真正消費按星期一至星期日分組；存錢轉入不列為消費。</p>
+              </div>
+              <div className="flex gap-1 rounded-lg bg-slate-950/70 p-1">
+                <button onClick={()=>setWeekdayMetric("total")} className={`text-[11px] px-2 py-1.5 rounded-md ${weekdayMetric==="total"?"bg-sky-300 text-slate-950 font-bold":"text-slate-300"}`}>累積開銷</button>
+                <button onClick={()=>setWeekdayMetric("average")} className={`text-[11px] px-2 py-1.5 rounded-md ${weekdayMetric==="average"?"bg-orange-300 text-slate-950 font-bold":"text-slate-300"}`}>平均每天</button>
+              </div>
+            </div>
+            {expenseRecords.length===0 ? <p className="text-xs text-slate-400 py-3">這個統計範圍尚無實際消費紀錄，記帳後就會顯示星期比較。</p> : <>
+              <div className="rounded-lg bg-slate-950/60 border border-slate-700/70 p-3">
+                <div className="text-xs text-slate-400">{weekdayMetric==="total"?"開銷最高的星期":"平均開銷最高的星期"}</div>
+                <div className="mt-1 flex flex-wrap items-baseline gap-2"><span className="text-xl font-black text-orange-200">{weekdayHighest?.label || "—"}</span><span className="text-lg font-bold text-sky-100">NT${money(weekdayHighest?weekdayDisplayValue(weekdayHighest):0)}</span></div>
+                {weekdayMetric==="average" && <p className="text-[10px] text-slate-500 mt-1">平均值以統計期間內該星期實際出現的日數計算，沒有消費的日子也會算入。</p>}
+              </div>
+              <div className="space-y-3">
+                {weekdayTotalsWithAverage.map(item=>{
+                  const value=weekdayDisplayValue(item);
+                  const isHighest=weekdayHighest && value===weekdayDisplayValue(weekdayHighest) && value>0;
+                  return <div key={item.label} className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-3 text-xs"><span className={`font-semibold ${isHighest?"text-orange-200":"text-slate-200"}`}>{item.label}{isHighest?" ★":""}</span><span className="whitespace-nowrap text-slate-200">NT${money(value)}{weekdayMetric==="total"?` · ${item.dayCount} 天`:` / 天`}</span></div>
+                    <div className="h-3 rounded-full bg-slate-800 overflow-hidden"><div className={`h-full rounded-full transition-all ${isHighest?"bg-gradient-to-r from-orange-400 to-amber-300":"bg-gradient-to-r from-blue-500 to-sky-300"}`} style={{width:`${value/weekdayMaxValue*100}%`}}></div></div>
+                  </div>;
+                })}
+              </div>
+              <p className="text-[10px] text-slate-500">資料範圍：{selectedRange.label}。切換上方「本週／本月／本年／全部」可比較不同期間。</p>
+            </>}
+          </div>
+
+          <div className="bg-slate-900/70 rounded-xl p-3 space-y-3">
+            {range === "year" ? <>
+              <h3 className="text-sm font-bold">📅 本年月份分析（每月圖表）</h3>
+              {yearMonthlyChart.map(item=><div key={item.month} className="space-y-1">
+                <div className="flex justify-between text-xs"><span>{Number(item.month.slice(5))}月圖表</span><span>NT${money(item.value)}{item.value===0?"（尚無支出）":""}</span></div>
+                <div className="h-3 rounded-full bg-slate-700 overflow-hidden"><div className="h-full rounded-full bg-sky-400" style={{width:`${item.value/maxMonthlyValue*100}%`}}></div></div>
+              </div>)}
+            </> : <>
+              <h3 className="text-sm font-bold">📅 每日支出趨勢</h3>
+              {dailyTotals.length === 0 ? <p className="text-xs text-slate-500">累積支出紀錄後，這裡會顯示每日長條圖。</p> : <>
+                <div className="flex items-end gap-1 h-32 border-b border-slate-700 pb-1">
+                  {dailyTotals.slice(-14).map(item=><div key={item.date} title={`${dateLabel(item.date)}：NT$${money(item.value)}`} className="flex-1 min-w-0 h-full flex flex-col justify-end items-center gap-1">
+                    <div className="w-full max-w-8 rounded-t bg-sky-400/90" style={{height:`${Math.max(4,item.value/dailyMaxValue*100)}%`}}></div>
+                    <span className="text-[9px] text-slate-400">{item.date.slice(5).replace("-","/")}</span>
+                  </div>)}
+                </div>
+                <p className="text-[11px] text-slate-500">顯示最近 14 個有支出的日期；提示中包含日期與金額。</p>
+              </>}
+            </>}
+          </div>
+
+          <details className="bg-gradient-to-r from-blue-950/70 to-amber-950/40 border border-slate-700 rounded-xl p-3 space-y-2">
+            <summary className="cursor-pointer text-sm font-bold text-amber-200">🍅 小佐助的分析報告（點擊展開／收合）</summary>
+            <p className="text-sm leading-6 text-slate-200 mt-2">{analysisSummary}</p>
+            {maxCategory && <p className="text-xs text-slate-400">分析提醒：最高支出類別不一定代表浪費。建議搭配備註確認是必要支出、一次性購買，還是可以調整的消費。</p>}
+          </details>
+
+          <div className="bg-slate-900/70 rounded-xl p-3 space-y-2">
+            <div className="flex justify-between items-center gap-2 text-xs"><span className="text-slate-300">本月預算使用進度</span><span className={monthExpense>settings.monthlyBudget?"text-rose-300":"text-amber-200"}>NT${money(monthExpense)} / ${money(settings.monthlyBudget)}</span></div>
+            <div className="h-2 rounded-full bg-slate-700 overflow-hidden"><div className={`h-full rounded-full ${monthExpense>settings.monthlyBudget?"bg-rose-500":"bg-emerald-400"}`} style={{width:`${budgetProgress}%`}}></div></div>
+            <p className="text-xs text-slate-400">{settings.monthlyBudget<=0 ? "月預算目前為 0，請在上方設定預算。" : monthExpense>settings.monthlyBudget ? `本月已超出預算 NT$${money(monthExpense-settings.monthlyBudget)}。` : `本月尚餘 NT$${money(settings.monthlyBudget-monthExpense)}，已使用 ${budgetProgress.toFixed(1)}%。`}</p>
+          </div>
+          </div>
+        </details>
+
+        </>}{activeTab === "ledger" && <>
+        <details className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+          <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-bold text-amber-200"><span>{editingId?"✏️ 編輯紀錄":"➕ 新增收支"}</span><span className="text-xs text-slate-400">點擊展開／收合</span></summary>
+          <div className="mt-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <button type="button" onClick={()=>{setType("expense");setCategory("飲食－午餐");}} className={`py-2.5 rounded-lg text-sm font-bold ${type==="expense"?"bg-rose-600":"bg-slate-700 text-slate-300"}`}>💸 記支出</button>
+              <button type="button" onClick={()=>{setType("income");setCategory("薪資/打工");}} className={`py-2.5 rounded-lg text-sm font-bold ${type==="income"?"bg-emerald-600":"bg-slate-700 text-slate-300"}`}>💰 記收入</button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-xs text-slate-400">金額（NT$）<input required type="number" min="0.01" step="0.01" inputMode="decimal" placeholder="輸入金額" value={amount} onChange={e=>setAmount(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-base text-amber-200"/></label>
+              <label className="text-xs text-slate-400">日期<input required type="date" value={recordDate} onChange={e=>{setRecordDate(e.target.value);setRecordDateManual(true);}} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/><span className="block mt-1 text-[11px] text-amber-200">{dateLabel(recordDate)}</span>{recordDateManual && <button type="button" onClick={()=>{setRecordDate(todayLocal());setRecordDateManual(false);}} className="mt-1 text-[11px] text-sky-300 underline">回到今天</button>}</label>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2">
+                <label className="text-xs text-slate-400">分類<select value={type === "expense" ? selectedMainCategory : category} onChange={e=>{if(type === "expense"){const main=e.target.value;const subs=subcategories[main]||[];setCategory(subs.length ? `${main}－${subs[0]}` : main);}else setCategory(e.target.value);}} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm">{categories.map(c=><option key={c} value={c}>{c}</option>)}</select></label>
+                {type === "expense" && currentSubcategories.length > 0 && <label className="text-xs text-slate-400">細項<select value={currentSubcategories.includes(selectedSubCategory) ? selectedSubCategory : currentSubcategories[0]} onChange={e=>setCategory(`${selectedMainCategory}－${e.target.value}`)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm">{currentSubcategories.map(c=><option key={c} value={c}>{c}</option>)}</select></label>}
+              </div>
+              <label className="text-xs text-slate-400">付款方式<select value={payment} onChange={e=>setPayment(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm">{["現金","金融卡","信用卡","行動支付","轉帳","其他"].map(c=><option key={c}>{c}</option>)}</select></label>
+            </div>
+            <label className="block text-xs text-slate-400">品項 / 收入來源 / 備註<input value={note} onChange={e=>setNote(e.target.value)} placeholder="例如：飲料、文具、打工薪水；不確定可寫待確認" className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+            <div className="grid grid-cols-2 gap-2">
+              <button type="submit" className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-2.5 rounded-lg">{editingId?"儲存修改":"新增紀錄"}</button>
+              {editingId && <button type="button" onClick={resetForm} className="bg-slate-700 py-2.5 rounded-lg">取消編輯</button>}
+            </div>
+          </form>
+          </div>
+        </details>
+
+        <details className="bg-gradient-to-r from-blue-950/80 to-amber-950/60 p-4 rounded-xl border border-amber-500/30">
+          <summary className="cursor-pointer list-none flex items-center gap-2 mb-3"><span className="text-2xl">🍅</span><div><div className="font-bold text-amber-200">小佐助的記帳提醒</div><div className="text-[11px] text-slate-400">點擊展開／收合 · 本機規則式回覆示範，尚未連接 AI</div></div><span className="ml-auto text-2xl">🍥</span></summary>
+          <div className="mt-3">
+          <p className="text-sm whitespace-pre-line leading-relaxed bg-slate-950/60 rounded-lg p-3 border border-slate-700">{dialog}</p>
+          <div className="flex flex-wrap gap-2 mt-3">
+            <button onClick={()=>chatSend("今天花多少")} className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">今天花多少？</button>
+            <button onClick={()=>chatSend("本月預算")} className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">本月預算</button>
+            <button onClick={()=>chatSend("本月分類分析")} className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">哪類花最多？</button>
+            <button onClick={()=>chatSend("教我怎麼省錢")} className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">省錢建議</button>
+            <button onClick={()=>chatSend("我最近壓力很大")} className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">聊聊心情</button>
+            <button onClick={()=>chatSend("我想買一個東西") } className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">購物猶豫</button>
+            <button onClick={()=>chatSend("可以做什麼") } className="text-xs bg-slate-800 border border-slate-600 px-3 py-2 rounded-full">聊天功能</button>
+          </div>
+          <form onSubmit={e=>{e.preventDefault();chatSend();}} className="flex gap-2 mt-3">
+            <input value={chatInput} onChange={e=>setChatInput(e.target.value)} placeholder="跟小佐助說話……" className="min-w-0 flex-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm"/>
+            <button className="bg-amber-500 text-slate-950 px-4 rounded-lg" aria-label="送出訊息"><i className="fa-solid fa-paper-plane"></i></button>
+          </form>
+          </div>
+        </details>
+
+        <section className="space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-bold text-sm">📒 收支歷史（{records.length} 筆）</h2>
+            <div className="grid grid-cols-4 gap-1 text-xs">
+              {[ ["day","日"], ["week","週"], ["month","月"], ["year","年"] ].map(([v,label])=><button key={v} onClick={()=>setHistoryGroup(v)} className={`px-3 py-1.5 rounded-lg ${historyGroup===v?"bg-amber-400 text-slate-950 font-bold":"bg-slate-700 text-slate-300"}`}>{label}檢視</button>)}
+            </div>
+          </div>
+          {historyGroups.length===0 ? <div className="text-center text-sm text-slate-500 py-8 bg-slate-800 rounded-xl">目前沒有收支紀錄。</div> : historyGroups.map(group=><details key={group.key} className="bg-slate-800 rounded-xl border border-slate-700" open={group.key === historyGroups[0]?.key}>
+            <summary className="cursor-pointer p-3 flex flex-wrap justify-between gap-2 text-sm"><span className="font-bold">{group.label}（{group.records.length} 筆）</span><span className="text-xs"><span className="text-emerald-300">收入 ${money(group.income)}</span> · <span className="text-rose-300">支出 ${money(group.expense)}</span> · <span className="text-amber-200">存錢轉入 ${money(group.transferOut||0)}</span> · <span className="text-sky-300">轉回 ${money(group.records.filter(r=>r.type==="transfer_in" && r.savingsTransfer).reduce((s,r)=>s+Number(r.amount||0),0))}</span></span></summary>
+            <div className="p-2 pt-0 space-y-2">{group.records.map(r=><article key={r.id} className="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+              <div className="flex gap-3 items-start">
+                <div className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center ${r.type==="expense"?"bg-rose-950 text-rose-300":r.type==="transfer_in"?"bg-sky-950 text-sky-300":"bg-emerald-950 text-emerald-300"}`}><i className={`fa-solid ${r.type==="expense"?"fa-arrow-up":r.type==="transfer_in"?"fa-right-left":"fa-arrow-down"}`}></i></div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-bold break-words">{r.note}</span><span className="text-[10px] bg-slate-700 px-2 py-0.5 rounded-full">{r.category}</span></div>
+                  <div className="text-xs text-slate-400 mt-1">{dateLabel(r.date)} · {r.payment||"未填付款方式"}</div>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {!r.savingsTransfer && r.type!=="transfer_in" && <button onClick={()=>editRecord(r)} className="text-[11px] px-2 py-1 rounded bg-slate-700 text-slate-200"><i className="fa-solid fa-pen mr-1"></i>編輯</button>}
+                    {!r.savingsTransfer && r.type!=="transfer_in" && <button onClick={()=>deleteRecord(r.id)} className="text-[11px] px-2 py-1 rounded bg-slate-700 text-rose-300"><i className="fa-solid fa-trash mr-1"></i>刪除</button>}
+                    {r.savingsTransfer && <span className="text-[10px] text-sky-300">請至存錢所管理對應紀錄</span>}
+                  </div>
+                </div>
+                <div className={`text-sm font-black whitespace-nowrap ${r.type==="expense"?"text-rose-300":r.type==="transfer_in"?"text-sky-300":"text-emerald-300"}`}>{r.type==="expense"?"−":r.type==="transfer_in"?"↩ +":"+"}${money(r.amount)}</div>
+              </div>
+            </article>)}</div>
+          </details>)}
+        </section>
+
+        </>}{activeTab === "data" && <>
+        <section className="bg-slate-800/70 border border-slate-700 rounded-xl p-4 space-y-3">
+          <h2 className="font-bold text-sm">資料備份與匯入</h2>
+          <p className="text-xs text-slate-400">此版本的資料存於目前瀏覽器。清除瀏覽資料、換瀏覽器或換裝置可能無法看到原紀錄。請定期備份；跨裝置同步需完成雲端設定。</p>
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={backupJSON} className="bg-slate-700 rounded-lg p-2 text-sm">下載完整 JSON 備份</button>
+            <button onClick={()=>setShowImport(v=>!v)} className="bg-slate-700 rounded-lg p-2 text-sm">匯入 JSON 備份</button>
+          </div>
+          {showImport && <label className="block text-xs text-slate-300">選擇先前匯出的 JSON 檔<input type="file" accept=".json,application/json" onChange={importJSON} className="block w-full mt-2 text-xs"/></label>}
+          <button onClick={exportCSV} className="w-full bg-emerald-800 hover:bg-emerald-700 rounded-lg p-2 text-sm"><i className="fa-solid fa-file-excel mr-2"></i>匯出 Excel 可開啟的 CSV</button>
+        </section>
+          <section className="rounded-xl border border-sky-300/20 bg-slate-900/70 p-3 text-xs text-slate-300">
+            <h3 className="font-bold text-sky-200">資料安全提醒</h3>
+            <p className="mt-1">換手機、換瀏覽器或清除網站資料前，請先下載完整 JSON 備份。匯入前也建議先備份目前版本。此版本仍使用瀏覽器本機儲存，並未自動同步雲端。</p>
+          </section>
+        </>}
+
+        {activeTab === "tools" && <section className="space-y-4">
+          <div className="rounded-2xl border border-orange-300/40 bg-gradient-to-br from-blue-950/95 via-indigo-950/90 to-orange-950/70 p-4">
+            <h2 className="font-black text-lg text-orange-100">💡 生活計算工具</h2>
+            <p className="text-xs text-slate-300 mt-1">獨立工具頁；計算結果不會自動新增一般收支紀錄。</p>
+          </div>
+            <div className="relative mt-3">
+          <div className="bg-gradient-to-br from-blue-950/90 via-indigo-950/85 to-orange-950/70 border border-orange-300/35 rounded-xl p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">⚡</span>
+              <div>
+                <h3 className="text-sm font-bold text-orange-100">電費計算區</h3>
+                <p className="text-xs text-slate-300 mt-0.5">輸入目前電表數，立即計算本期電費。</p>
+              </div>
+            </div>
+            <label className="block text-xs text-sky-100">現電表數
+              <input type="number" min="4813" step="any" inputMode="decimal" value={electricMeterReading} onChange={e=>setElectricMeterReading(e.target.value)} placeholder="請輸入目前電表數" className="mt-1 w-full rounded-lg border p-3 text-base" />
+            </label>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="rounded-lg bg-slate-950/60 border border-sky-300/20 p-3"><div className="text-slate-400">電表入住數</div><div className="mt-1 text-lg font-bold text-sky-100">4,813</div></div>
+              <div className="rounded-lg bg-slate-950/60 border border-orange-300/20 p-3"><div className="text-slate-400">每度電費</div><div className="mt-1 text-lg font-bold text-orange-100">NT$5</div></div>
+            </div>
+            <div className="rounded-lg border border-orange-300/30 bg-slate-950/70 p-3">
+              <div className="text-xs text-slate-300">計算公式</div>
+              <div className="mt-1 text-sm text-sky-100">(現電表數 − 4,813) × 5 元 = 電費</div>
+              {electricMeterReading.trim()==="" ? <div className="mt-3 text-sm text-slate-400">輸入現電表數後顯示電費。</div> : Number(electricMeterReading)<4813 || !Number.isFinite(Number(electricMeterReading)) ? <div className="mt-3 text-sm font-bold text-rose-300">現電表數不可小於入住電表數 4,813。</div> : <div className="mt-3 flex items-baseline justify-between gap-2"><span className="text-sm text-orange-100">本期電費</span><strong className="text-2xl text-orange-200">NT${money((Number(electricMeterReading)-4813)*5)}</strong></div>}
+            </div>
+          </div>
+
+            </div>
+
+        </section>}
+
+        {activeTab === "savings" && <div className="space-y-4">
+          <section className="rounded-2xl border border-sky-300/50 bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 p-4 space-y-3 relative overflow-hidden">
+            <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-orange-500/10 to-transparent pointer-events-none"></div>
+            <div className="relative">
+              <div className="text-xs tracking-[0.2em] text-sky-200">SASUNARU SAVINGS ROOM</div>
+              <h2 className="text-2xl font-black bg-gradient-to-r from-sky-200 via-white to-orange-200 bg-clip-text text-transparent">🩵 佐鳴存錢所 🧡</h2>
+              <p className="text-sm text-slate-300">每個存錢目標獨立計算，金額不合併。收支結餘存入會獨立顯示在「存錢轉入」，並從一般可用結餘扣除；額外收入不加入一般收支；使用存款只扣除指定目標，不重複記一般支出。每月結算後的正結餘可轉入「存錢筒」，每月只可結算一次。</p>
+            </div>
+            {savingsGoals.length===0 ? <div className="rounded-xl border border-sky-300/20 bg-slate-950/50 p-3 text-sm text-slate-300">建立存錢目標後，這裡會分別顯示每個目標的存款餘額與紀錄。</div> : <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 relative">
+              {savingsGoals.map((goal,index)=>{
+                const goalTx=savingsTransactions.filter(t=>String(t.goalId)===String(goal.id));
+                const deposited=goalTx.filter(t=>t.type==="deposit").reduce((sum,t)=>sum+Number(t.amount||0),0);
+                const used=goalTx.filter(t=>t.type!=="deposit").reduce((sum,t)=>sum+Number(t.amount||0),0);
+                const meta=savingsGroupMeta[goal.group] || savingsGroupMeta["其他"];
+                const accent=goal.group==="佐鳴周邊類"?"border-orange-300/50":"border-sky-300/40";
+                return <div key={goal.id} className={`rounded-xl border ${accent} bg-slate-950/70 p-3`}>
+                  <div className="text-xs text-slate-300">{meta.icon} {goal.name}</div>
+                  <div className="text-xl font-black text-sky-100 mt-1">NT${money(goalBalance(goal.id))}</div>
+                  <div className="grid grid-cols-2 gap-2 mt-2 text-[11px]"><div className="rounded-lg bg-emerald-950/60 p-2"><div className="text-emerald-200">此目標累積存入</div><div className="font-bold text-emerald-100">${money(deposited)}</div></div><div className="rounded-lg bg-rose-950/50 p-2"><div className="text-rose-200">此目標使用存款</div><div className="font-bold text-rose-100">${money(used)}</div></div></div>
+                </div>;
+              })}
+            </div>}
+          </section>
+
+          <section className="rounded-2xl border border-orange-300/40 bg-gradient-to-br from-blue-950/95 via-indigo-950/90 to-orange-950/70 p-4">
+            <details className="group">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-300/70">
+                <div className="flex items-center gap-2"><span className="text-2xl">🐷</span><div><h3 className="font-black text-orange-100">月底結算｜存錢筒</h3><p className="text-xs text-slate-300">結算已結束月份的收支結餘，累積存入「存錢筒」。</p></div></div>
+                <span className="shrink-0 rounded-lg bg-slate-900/70 px-3 py-2 text-xs font-bold text-orange-100 group-open:hidden">展開 ＋</span>
+                <span className="hidden shrink-0 rounded-lg bg-slate-900/70 px-3 py-2 text-xs font-bold text-orange-100 group-open:inline">收合 −</span>
+              </summary>
+              <div className="mt-4 space-y-3">
+            <label className="block text-xs text-slate-300">選擇要結算的月份<input type="month" value={closingMonth} onChange={e=>setClosingMonth(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">當月收入</div><div className="mt-1 text-lg font-black text-emerald-200">NT${money(closingIncome)}</div></div>
+              <div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">實際支出</div><div className="mt-1 text-lg font-black text-rose-200">NT${money(closingExpenses)}</div></div>
+              <div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">先前從結餘存入</div><div className="mt-1 text-lg font-black text-sky-200">NT${money(closingTransferOut)}</div></div>
+              <div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">本次預計轉存</div><div className="mt-1 text-xl font-black text-orange-200">NT${money(Math.max(0,closingBalance))}</div></div>
+            </div>
+            {closedMonthEntry ? <div className="rounded-lg border border-emerald-400/30 bg-emerald-950/40 p-3 text-sm text-emerald-200">✓ {closingMonth} 已結算，當次轉存 NT${money(closedMonthEntry.amount)}。為避免重複入帳，不能再次結算。</div> : isCurrentOrFutureClosingMonth ? <div className="rounded-lg bg-slate-950/50 p-3 text-xs text-amber-100">請等 {closingMonth} 月結束後，再於下個月選擇這個月份結算。當月收支資料會持續更新。</div> : <div className="rounded-lg bg-slate-950/50 p-3 text-xs text-slate-300">結算後會把正結餘存入「存錢筒」，不新增一般消費；月檢視仍保留該月原始結餘，年檢視與全部檢視也保留歷史資料。</div>}
+            <button onClick={closeMonthIntoPiggyBank} disabled={!!closedMonthEntry || isCurrentOrFutureClosingMonth} className={`w-full rounded-lg py-3 font-black ${closedMonthEntry || isCurrentOrFutureClosingMonth ? "bg-slate-700 text-slate-400 cursor-not-allowed" : "bg-gradient-to-r from-sky-400 to-orange-400 text-slate-950"}`}>確認結算並轉入存錢筒</button>
+              </div>
+            </details>
+          </section>
+
+          <details className="bg-slate-800 rounded-xl border border-slate-700 p-4">
+            <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-bold text-amber-200"><span>➕ 建立存錢目標</span><span className="text-xs text-slate-400">點擊展開／收合</span></summary>
+            <div className="mt-4">
+            <form onSubmit={addSavingsGoal} className="space-y-3">
+              <label className="block text-xs text-slate-400">存錢分類<select value={goalGroup} onChange={e=>setGoalGroup(e.target.value)} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm">{savingsGroups.map(g=><option key={g} value={g}>{savingsGroupLabels[g] || g}</option>)}</select></label>
+              <label className="block text-xs text-slate-400">目標名稱<input required value={goalName} onChange={e=>setGoalName(e.target.value)} placeholder={goalGroup==="佐鳴周邊類"?"例如：佐鳴立牌、COS 攝影":goalGroup==="水電費類"?"例如：每月水費、電費":"例如：每日存 10 元計畫"} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+              <div className="grid grid-cols-2 gap-2">
+                <label className="block text-xs text-slate-400">目標金額（可留空）<input type="number" min="0" step="1" value={goalTarget} onChange={e=>setGoalTarget(e.target.value)} placeholder="例如 5000" className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+                <label className="block text-xs text-slate-400">每月固定存入（可留空）<input type="number" min="0" step="1" value={goalMonthly} onChange={e=>setGoalMonthly(e.target.value)} placeholder="例如 500" className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+              </div>
+              <button className="w-full bg-sky-400 hover:bg-sky-300 text-slate-950 font-black rounded-lg py-2.5">建立目標</button>
+            </form>
+            </div>
+          </details>
+
+          <details className="space-y-3 bg-slate-900/40 rounded-xl border border-sky-300/20 p-3">
+            <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-bold"><span>📦 我的存錢目標（{savingsGoals.length} 個）</span><span className="text-xs text-slate-400">點擊展開／收合</span></summary>
+            <div className="mt-4 space-y-3">
+            {savingsGoals.length===0 && <div className="text-center text-sm text-slate-400 bg-slate-800 rounded-xl p-6">可以建立「佐鳴周邊」、「水費」或「每日存 10 元計畫」；「存錢筒」是月底結算專用目標，會自動保留。</div>}
+            {savingsGroups.map(group=>{
+              const groupGoals=savingsGoals.filter(g=>g.group===group);
+              if(!groupGoals.length) return null;
+              const meta=savingsGroupMeta[group];
+              return <div key={group} className={`bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 rounded-xl border ${meta.color} p-3 space-y-3`}>
+                <div className="flex items-center gap-2"><span className="text-2xl">{meta.icon}</span><div><h4 className="font-bold">{savingsGroupLabels[group] || group}</h4><p className="text-xs text-slate-400">{meta.title}</p></div><span className="ml-auto text-xs text-slate-400">各目標分開計算</span></div>
+                {groupGoals.map(goal=>{
+                  const bal=goalBalance(goal.id); const progress=goal.target>0?Math.min(100,bal/goal.target*100):0;
+                  const txs=savingsTransactions.filter(t=>String(t.goalId)===String(goal.id)).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||b.id-a.id);
+                  return <article key={goal.id} className={`bg-slate-950/70 border ${goal.group==="佐鳴周邊類"?"border-orange-300/40":"border-sky-300/25"} rounded-xl p-3 space-y-2`}>
+                    <div className="flex items-start gap-2"><div className="min-w-0 flex-1"><div className="font-bold break-words">{goal.name}{isMonthlyPiggyBank(goal) && <span className="ml-2 inline-flex rounded-full border border-orange-300/40 bg-orange-950/60 px-2 py-0.5 text-[10px] text-orange-200">🔒 系統專用・不可編輯</span>}</div><div className="text-xs text-slate-400 mt-1">目前存款 <span className="text-sky-200 font-bold">NT${money(bal)}</span>{goal.target>0?` ／ 目標 NT$${money(goal.target)}`:" ／ 自由存錢"}</div></div>{!isMonthlyPiggyBank(goal) && <div className="flex gap-1"><button onClick={()=>startEditSavingsGoal(goal)} className="text-xs text-sky-200 px-2 py-1 rounded bg-slate-800">編輯設定</button><button onClick={()=>deleteSavingsGoal(goal)} className="text-xs text-rose-300 px-2 py-1 rounded bg-slate-800">刪除目標</button></div>}</div>
+                    {String(editingGoalId)===String(goal.id) && <div className="rounded-lg border border-sky-300/30 bg-slate-900 p-3 space-y-2">
+                      <div className="text-xs font-bold text-sky-200">編輯目標設定</div>
+                      <label className="block text-xs text-slate-400">存錢分類<select value={editingGoalGroup} onChange={e=>setEditingGoalGroup(e.target.value)} className="mt-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm">{savingsGroups.map(g=><option key={g} value={g}>{savingsGroupLabels[g] || g}</option>)}</select></label>
+                      <label className="block text-xs text-slate-400">目標名稱<input value={editingGoalName} onChange={e=>setEditingGoalName(e.target.value)} className="mt-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm" /></label>
+                      <label className="block text-xs text-slate-400">目標金額（留空代表自由存錢）<input type="number" min="0" step="1" value={editingGoalTarget} onChange={e=>setEditingGoalTarget(e.target.value)} placeholder="例如 5000" className="mt-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm" /></label>
+                      <label className="block text-xs text-slate-400">每月固定存入（留空代表不設定）<input type="number" min="0" step="1" value={editingGoalMonthly} onChange={e=>setEditingGoalMonthly(e.target.value)} placeholder="例如 500" className="mt-1 w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-sm" /></label>
+                      <div className="flex gap-2"><button onClick={()=>saveEditedSavingsGoal(goal)} className="flex-1 rounded-lg bg-sky-700 px-3 py-2 text-xs font-bold">儲存設定</button><button onClick={()=>setEditingGoalId(null)} className="rounded-lg bg-slate-700 px-3 py-2 text-xs">取消</button></div>
+                    </div>}
+                    {goal.target>0 && <><div className="h-2 bg-slate-700 rounded-full overflow-hidden"><div className="h-full bg-sky-400 rounded-full" style={{width:`${progress}%`}}></div></div><div className="text-[11px] text-slate-400">{progress.toFixed(1)}% · 還差 NT${money(Math.max(0,goal.target-bal))}</div></>}
+                    {!isMonthlyPiggyBank(goal) && goal.monthly>0 && <button onClick={()=>monthlyDeposit(goal)} className="text-xs rounded-lg bg-indigo-800 hover:bg-indigo-700 px-3 py-2">確認本月固定存入 NT${money(goal.monthly)}</button>}
+                    {!isMonthlyPiggyBank(goal) ? <div className="flex flex-wrap gap-2"><button onClick={()=>{setSelectedGoalId(String(goal.id));setSavingAction("deposit");setSavingAmount("");setSavingNote("");document.getElementById("savings-action-form")?.scrollIntoView({behavior:"smooth",block:"start"});}} className="text-xs rounded-lg bg-emerald-800 px-3 py-2">＋ 存入</button><button onClick={()=>{setSelectedGoalId(String(goal.id));setSavingAction("spend");setSavingAmount("");setSavingNote("");document.getElementById("savings-action-form")?.scrollIntoView({behavior:"smooth",block:"start"});}} className="text-xs rounded-lg bg-rose-900 px-3 py-2">從存款直接消費</button></div> : <div className="flex flex-wrap items-center gap-2 rounded-lg border border-orange-300/20 bg-orange-950/30 p-2"><span className="flex-1 text-xs text-orange-100">可月底結算，也可額外存入；花用紀錄會獨立統計，不影響一般收支帳本。</span><button onClick={()=>{setSelectedGoalId(String(goal.id));setSavingAction("deposit");setSavingSource("extra");setSavingAmount("");setSavingNote("");document.getElementById("savings-action-form")?.scrollIntoView({behavior:"smooth",block:"start"});}} className="shrink-0 rounded-lg bg-emerald-700 hover:bg-emerald-600 px-3 py-2 text-xs font-bold">＋ 額外存入</button><button onClick={()=>{setSelectedGoalId(String(goal.id));setSavingAction("spend");setSavingAmount("");setSavingNote("");document.getElementById("savings-action-form")?.scrollIntoView({behavior:"smooth",block:"start"});}} className="shrink-0 rounded-lg bg-rose-700 hover:bg-rose-600 px-3 py-2 text-xs font-bold">🐷 使用存錢筒</button></div>}
+                    {txs.length>0 && <details className="pt-1"><summary className="cursor-pointer text-xs text-slate-300">查看存錢紀錄（{txs.length} 筆）</summary><div className="space-y-1 mt-2">{txs.slice(0,10).map(t=><div key={t.id} className="flex justify-between gap-2 text-xs border-b border-slate-800 py-1"><span className="min-w-0">{dateLabel(t.date)} · {t.note}</span><span className={t.type==="deposit"?"text-emerald-300":"text-rose-300"}>{t.type==="deposit"?"+":"−"}${money(t.amount)}</span></div>)}</div></details>}
+                  </article>;
+                })}
+              </div>;
+            })}
+            </div>
+          </details>
+
+          {(() => { const piggy=savingsGoals.find(g=>isMonthlyPiggyBank(g)); const piggyTx=savingsTransactions.filter(t=>piggy && String(t.goalId)===String(piggy.id) && t.type!=="deposit"); const piggySpent=piggyTx.reduce((sum,t)=>sum+Number(t.amount||0),0); const thisMonth=piggyTx.filter(t=>(t.date||"").slice(0,7)===currentDate.slice(0,7)); const monthSpent=thisMonth.reduce((sum,t)=>sum+Number(t.amount||0),0); const purposeTotals=Object.entries(piggyTx.reduce((acc,t)=>{const k=(t.note||"未填寫用途").trim()||"未填寫用途";acc[k]=(acc[k]||0)+Number(t.amount||0);return acc;},{})).sort((a,b)=>b[1]-a[1]); return <details className="rounded-xl border border-orange-300/30 bg-orange-950/20 p-4 space-y-3"><summary className="cursor-pointer list-none flex items-center justify-between gap-3"><div><h3 className="font-black text-orange-100">🐷 存錢筒支出分析</h3><p className="text-xs text-slate-400 mt-1">獨立統計，不納入一般收支、預算或一般消費分析。</p></div><span className="text-xs text-orange-200">點擊展開／收合</span></summary><div className="pt-3 space-y-3"><div className="grid grid-cols-2 gap-2"><div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">累積使用</div><div className="mt-1 text-lg font-black text-rose-200">NT${money(piggySpent)}</div></div><div className="rounded-lg bg-slate-950/60 p-3"><div className="text-xs text-slate-400">本月使用</div><div className="mt-1 text-lg font-black text-orange-200">NT${money(monthSpent)}</div></div></div><div className="space-y-1"><div className="text-xs font-bold text-slate-300">依用途統計</div>{purposeTotals.length?purposeTotals.map(([purpose,total])=><div key={purpose} className="flex justify-between gap-3 border-b border-slate-700/70 py-1.5 text-xs"><span className="min-w-0 break-words text-slate-300">{purpose}</span><span className="shrink-0 text-rose-200">-${money(total)}</span></div>):<p className="text-xs text-slate-500">目前還沒有存錢筒支出紀錄。</p>}</div><details><summary className="cursor-pointer text-xs font-bold text-orange-200">查看存錢筒支出明細（{piggyTx.length} 筆）</summary><div className="mt-2 space-y-1">{piggyTx.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")||b.id-a.id).map(t=><div key={t.id} className="flex justify-between gap-3 border-b border-slate-800 py-1.5 text-xs"><span className="min-w-0 text-slate-300">{dateLabel(t.date)} · {t.note||"存錢筒支出"}</span><span className="shrink-0 text-rose-300">-${money(t.amount)}</span></div>)}</div></details></div></details>; })()}
+
+          <section id="savings-action-form" className="bg-slate-800 border border-sky-400/30 rounded-xl p-4 space-y-3">
+            <h3 className="font-bold text-sky-200">💰 存入／提領／使用存款</h3>
+            <form onSubmit={handleSavingsSubmit} className="space-y-3">
+              <label className="block text-xs text-slate-400">選擇目標<select required value={selectedGoalId} onChange={e=>{setSelectedGoalId(e.target.value);const g=savingsGoals.find(x=>String(x.id)===e.target.value);if(g&&isMonthlyPiggyBank(g))setSavingSource("extra");}} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"><option value="">請選擇存錢目標</option>{savingsGroups.map(group=><optgroup key={group} label={savingsGroupLabels[group] || group}>{savingsGoals.filter(g=>g.group===group && (!isMonthlyPiggyBank(g) || savingAction==="spend" || (savingAction==="deposit" && savingSource==="extra"))).map(g=><option key={g.id} value={String(g.id)}>{g.name}（餘額 NT${money(goalBalance(g.id))}）</option>)}</optgroup>)}</select></label>
+              <div className="grid grid-cols-2 gap-1">{[["deposit","存入"],["spend","使用存款"]].map(([v,label])=><button type="button" key={v} onClick={()=>setSavingAction(v)} className={`rounded-lg px-2 py-2 text-xs ${savingAction===v?"bg-sky-400 text-slate-950 font-bold":"bg-slate-700 text-slate-200"}`}>{label}</button>)}</div>
+              {savingAction==="deposit" && <div className="space-y-2"><div className="text-xs text-slate-400">存入來源（請選擇）</div><div className="grid grid-cols-2 gap-2"><button type="button" onClick={()=>setSavingSource("extra")} className={`rounded-lg p-2 text-xs ${savingSource==="extra"?"bg-emerald-500 text-slate-950 font-bold":"bg-slate-700 text-slate-200"}`}>額外收入<br/><span className="font-normal">不加入一般收支</span></button>{!savingsGoals.some(g=>String(g.id)===String(selectedGoalId)&&isMonthlyPiggyBank(g)) && <button type="button" onClick={()=>setSavingSource("balance")} className={`rounded-lg p-2 text-xs ${savingSource==="balance"?"bg-emerald-500 text-slate-950 font-bold":"bg-slate-700 text-slate-200"}`}>收支結餘<br/><span className="font-normal">從一般可用結餘扣除</span></button>}</div></div>}
+              <label className="block text-xs text-slate-400">金額（NT$）<input required type="number" min="0.01" step="0.01" value={savingAmount} onChange={e=>setSavingAmount(e.target.value)} placeholder="輸入金額" className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+              <label className="block text-xs text-slate-400">備註／用途<input value={savingNote} onChange={e=>setSavingNote(e.target.value)} placeholder={savingAction==="deposit"?"例如：本月存錢／額外零用錢":"例如：購買佐鳴立牌／繳電費"} className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"/></label>
+              <p className="text-xs text-slate-400">{savingAction==="deposit"?(savingSource==="extra"?"額外收入只增加此存錢目標，不會新增一般收入，也不影響一般收支結餘。":"從收支結餘存入：一般可用結餘減少，存錢目標增加；不列為一般消費、分類分析或預算。外部收入請選「額外收入」。"):(savingsGoals.some(g=>String(g.id)===String(selectedGoalId)&&isMonthlyPiggyBank(g))?"存錢筒支出會記錄在專屬帳目與分析中，不會列入一般收支支出。":"使用存款只扣除所選存錢目標，不會在一般記帳新增支出。")}</p>
+              <button className="w-full bg-sky-400 hover:bg-sky-300 text-slate-950 font-black rounded-lg py-2.5">確認操作</button>
+            </form>
+          </section>
+
+          <section className="bg-blue-950/50 border border-blue-400/20 rounded-xl p-3 text-xs text-slate-300 space-y-1"><div className="font-bold text-blue-200">🩵存錢所總覽</div><p>這裡的「存錢所剩」只計算存錢目標內的餘額，不會加進一般收支結餘。使用存款只扣除該目標，不新增一般支出。新版不再提供「轉回」功能。</p></section>
+        </div>}
+
+        <footer className="text-center text-[11px] text-slate-500 pt-2">佐鳴記帳所 V15 · 存錢筒額外存入／年度月報 · 資料保存在目前瀏覽器</footer>
+      </div>;
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
