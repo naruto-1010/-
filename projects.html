@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的作品集 | Projects</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            dark: '#1e293b',
+            light: '#f8fafc'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-light text-slate-700">
+
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-primary">My Portfolio.</a>
+      <div class="flex flex-wrap gap-4 md:gap-6 text-sm font-medium">
+        <a href="index.html" class="hover:text-primary">首頁</a>
+        <a href="index.html#about" class="hover:text-primary">關於我</a>
+        <a href="index.html#skills" class="hover:text-primary">技能</a>
+        <a href="projects.html" class="text-primary">作品集</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="bg-gradient-to-br from-indigo-50 to-white py-24">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="text-primary font-semibold tracking-widest mb-4">MY PORTFOLIO</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-dark mb-6">我的作品集</h1>
+      <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-8">
+        每一個作品，都是一次創意與實踐的累積。
+        在這裡記錄我的學習歷程、設計理念與專案成果。
+      </p>
+    </div>
+  </section>
+
+  <section class="py-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="bg-primary text-white px-5 py-2 rounded-full text-sm">全部作品</span>
+        <span class="bg-white border px-5 py-2 rounded-full text-sm">資訊科技</span>
+        <span class="bg-white border px-5 py-2 rounded-full text-sm">創意設計</span>
+        <span class="bg-white border px-5 py-2 rounded-full text-sm">小說創作</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 pb-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition">
+          <div class="h-52 bg-gradient-to-br from-purple-200 to-indigo-300 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-6xl mb-3">🎨</div>
+              <p class="font-bold text-xl">堕落のパレット</p>
+            </div>
+          </div>
+          <div class="p-7">
+            <span class="text-xs text-primary font-bold bg-indigo-50 px-3 py-1 rounded-full">3D / VR / 創意設計</span>
+            <h2 class="text-xl font-bold text-dark mt-5 mb-3">堕落のパレット</h2>
+            <p class="text-slate-500 text-sm leading-7 mb-5">
+              結合 3D 技術、虛擬實境與故事創作，打造具有懸疑與恐怖氛圍的互動式創意專題。
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">Unreal Engine 5</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">VRoid</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">Blender</span>
+            </div>
+            <p class="text-sm text-slate-400">專案角色：隊長／故事繪圖美編</p>
+          </div>
+        </article>
+
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition">
+          <div class="h-52 bg-gradient-to-br from-slate-700 to-slate-950 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-6xl mb-3">📖</div>
+              <p class="font-bold text-xl">不能說的秘密</p>
+            </div>
+          </div>
+          <div class="p-7">
+            <span class="text-xs text-primary font-bold bg-indigo-50 px-3 py-1 rounded-full">小說 / 靈異 / 懸疑</span>
+            <h2 class="text-xl font-bold text-dark mt-5 mb-3">不能說的秘密</h2>
+            <p class="text-slate-500 text-sm leading-7 mb-5">
+              以現代都市為背景，融合靈異、懸疑與恐怖元素，透過人物關係與故事伏筆營造壓迫感。
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">小說創作</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">世界觀設計</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">故事企劃</span>
+            </div>
+            <p class="text-sm text-slate-400">專案類型：原創故事企劃</p>
+          </div>
+        </article>
+
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition">
+          <div class="h-52 bg-gradient-to-br from-orange-200 to-rose-300 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-6xl mb-3">💰</div>
+              <p class="font-bold text-xl">SASUNARU</p>
+            </div>
+          </div>
+          <div class="p-7">
+            <span class="text-xs text-primary font-bold bg-indigo-50 px-3 py-1 rounded-full">網頁設計 / 資訊科技</span>
+            <h2 class="text-xl font-bold text-dark mt-5 mb-3">SASUNARU 佐鳴記帳所</h2>
+            <p class="text-slate-500 text-sm leading-7 mb-5">
+              以個人財務管理為核心，設計收支紀錄、消費分類、統計分析與獨立存錢目標管理功能。
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">HTML</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">CSS</span>
+              <span class="bg-slate-100 px-3 py-1 rounded text-xs">JavaScript</span>
+            </div>
+            <p class="text-sm text-slate-400">專案類型：個人網頁應用程式</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-indigo-50 py-16 text-center">
+    <h2 class="text-2xl font-bold text-dark mb-4">想進一步認識我嗎？</h2>
+    <p class="text-slate-500 mb-7">歡迎回到首頁，了解更多關於我的資訊。</p>
+    <a href="index.html" class="inline-block bg-primary text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition">返回首頁</a>
+  </section>
+
+  <footer class="bg-dark text-slate-300 py-7 text-center text-sm">
+    <p>© 2026 My Portfolio. All Rights Reserved.</p>
+    <p class="mt-2">Designed with Tailwind CSS.</p>
+  </footer>
+</body>
+</html>
